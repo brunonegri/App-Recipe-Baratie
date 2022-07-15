@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import fetchRecipeInfos from '../0 - Services/API/requestAPI'
+import { connect } from 'react-redux'
 
 function SearchBar() {
   const [filterSearch, setFilterSearch] = useState({});
@@ -9,7 +11,15 @@ function SearchBar() {
       [name]: value,
     }));
   };
-
+  
+  const handleClick = () => {
+    const { meal } = this.props
+    const { filter, search } = filterSearch;
+    if(filter === 'ingredient-search' ) {
+      const oi = fetchRecipeInfos(meal, 'filter', 'i', search);
+      console.log(oi)
+    }
+  }
   return (
     <form>
       <input
@@ -62,7 +72,7 @@ function SearchBar() {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ () => console.log(filterSearch) }
+        onClick={ handleClick }
       >
         Search
 
@@ -71,4 +81,8 @@ function SearchBar() {
   );
 }
 
-export default SearchBar;
+const mapStateToProps = (state) => ({
+  meal: state.page.meal,
+});
+
+export default connect(mapStateToProps)(SearchBar);
