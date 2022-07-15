@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../Components/Footer';
 
 function Profile() {
   return (
@@ -30,6 +31,7 @@ function Profile() {
           Logout
         </button>
       </div>
+      <Footer />
     </div>
 
   );
