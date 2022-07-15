@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import fetchRecipeInfos from '../0 - Services/API/requestAPI'
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 
-function SearchBar() {
+function SearchBar({ type }) {
   const [filterSearch, setFilterSearch] = useState({});
 
   const handleSelect = ({ target: { value, name } }) => {
@@ -11,15 +12,26 @@ function SearchBar() {
       [name]: value,
     }));
   };
-  
-  const handleClick = () => {
-    const { meal } = this.props
+
+  const handleClick = async () => {
     const { filter, search } = filterSearch;
-    if(filter === 'ingredient-search' ) {
-      const oi = fetchRecipeInfos(meal, 'filter', 'i', search);
-      console.log(oi)
+    if (filter === 'ingredient-search') {
+      const oi = await fetchRecipeInfos(type, 'filter', 'i', search);
+      console.log(oi);
+      return oi;
+    } if (filter === 'name-search') {
+      const oi = await fetchRecipeInfos(type, 'search', 's', search);
+      console.log(oi);
+      return oi;
+    } if (filter === 'first-letter') {
+      if (search.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      }
+      const oi = await fetchRecipeInfos(type, 'search', 'f', search);
+      console.log(oi);
+      return oi;
     }
-  }
+  };
   return (
     <form>
       <input
@@ -62,7 +74,7 @@ function SearchBar() {
           name="filter"
           type="radio"
           data-testid="first-letter-search-radio"
-          value="fisrt-letter"
+          value="first-letter"
           onChange={ handleSelect }
         />
         First Letter
@@ -82,7 +94,11 @@ function SearchBar() {
 }
 
 const mapStateToProps = (state) => ({
-  meal: state.page.meal,
+  type: state.page.setApi,
 });
 
-export default connect(mapStateToProps)(SearchBar);
+SearchBar.propTypes = {
+  type: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps, null)(SearchBar);
