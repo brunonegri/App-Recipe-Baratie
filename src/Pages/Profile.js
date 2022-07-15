@@ -1,31 +1,39 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 function Profile() {
+  const history = useHistory();
+  const userEmail = JSON.parse(localStorage.getItem('user'));
+
   return (
     <div>
       <header title="Profile" />
       <div>
         <div>
-          <h3 data-testid="profile-email">{/* chamarUserCadastrado */}</h3>
+          <h3 data-testid="profile-email">{userEmail}</h3>
         </div>
         <button
           type="button"
           data-testid="profile-done-btn"
-          /* onClick={ RedirecionarParaReceitasFeitas } */
+          onClick={ () => history.push('/done-recipes') }
         >
           Done Recipes
         </button>
         <button
           type="button"
           data-testid="profile-favorite-btn"
-          /* onClick={ redirecionarParaReceitasFavoritas } */
+          onClick={ () => { history.push('/favorite-recipes'); } }
         >
           Favorite Recipes
         </button>
         <button
           type="button"
           data-testid="profile-logout-btn"
-          /*  onClick={ RedirecionarParaLogin / LimparLocalStorage} */
+          onClick={ () => {
+            history.push('/');
+            localStorage.removeItem('user');
+          } }
         >
           Logout
         </button>
@@ -34,5 +42,9 @@ function Profile() {
 
   );
 }
-
+Profile.prototype = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 export default Profile;
