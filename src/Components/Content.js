@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../Pages/Login';
-import MainScrean from '../Pages/MainScreen'
-import Profile from '../Pages/Profile'
-import DoneRecipes from '../Pages/DoneRecipes'
-import FavoriteRecipes from '../Pages/FavoriteRecipes'
+import MainScrean from '../Pages/MainScreen';
+import Profile from '../Pages/Profile';
+import DoneRecipes from '../Pages/DoneRecipes';
+import FavoriteRecipes from '../Pages/FavoriteRecipes';
 
 function Content() {
   return (
