@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SearchBar from '../Components/SearchBar';
 
 function Login() {
   const [userEmail/* , setEmail */] = useState('');
@@ -33,7 +32,6 @@ function Login() {
       >
         Enter
       </button>
-	  <SearchBar />
     </div>
   );
 }
