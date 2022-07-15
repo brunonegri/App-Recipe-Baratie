@@ -12,9 +12,9 @@ function Content() {
       <Route exact path="/" component={ Login } />
       <Route path="/foods" component={ MainScrean } />
       <Route path="/drinks" component={ MainScrean } />
-      <Route path="profile" component={ Profile } />
-      <Route path="done-recipes" component={ DoneRecipes } />
-      <Route path="favorite-recipes" component={ FavoriteRecipes } />
+      <Route path="/profile" component={ Profile } />
+      <Route path="/done-recipes" component={ DoneRecipes } />
+      <Route path="/favorite-recipes" component={ FavoriteRecipes } />
     </Switch>
   );
 }
