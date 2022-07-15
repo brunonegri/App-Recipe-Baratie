@@ -6,7 +6,7 @@ function Login() {
   const six = 6;
   const CheckUserInfo = () => {
     userPassword.length > six
-      && userEmail.includes('@') && setValid((valid = !valid));
+        && userEmail.includes('@') && setValid((valid = !valid));
   };
 
   return (
