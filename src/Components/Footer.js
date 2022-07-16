@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import setPageAction from '../redux/Actions';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 
-const Footer = () => {
+const Footer = ({ dispatchPageName }) => {
   const history = useHistory();
-  console.log(history);
   const handleDrinkClick = () => {
+    dispatchPageName('Drinks');
     history.push('/drinks');
   };
   const handleMealClick = () => {
+    dispatchPageName('Foods');
     history.push('/foods');
   };
 
@@ -41,10 +44,12 @@ const Footer = () => {
   );
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchPageName: (pageName) => dispatch(setPageAction(pageName)),
+});
+
 Footer.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  dispatchPageName: PropTypes.func.isRequired,
 };
 
-export default Footer;
+export default connect(null, mapDispatchToProps)(Footer);
