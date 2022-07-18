@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
 import { setResultsAction } from '../redux/Actions/index';
@@ -8,15 +8,16 @@ import Recipe from '../Components/Recipe';
 import { fetchRecipeInfos, fetchSearch } from '../0 - Services/API/requestAPI';
 
 function MainScreen({ results, type, dispatchResults }) {
-  // const [recipes, setRecipes] = useState(results);
+  const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    const fetchApi = async () => {
+    async function fetchApi() {
       const oi = await fetchRecipeInfos(type, 'search', 's', '');
       dispatchResults(await fetchSearch(await oi));
-    };
+      setRecipes(await results);
+    }
     fetchApi();
-    console.log(results);
+    console.log(recipes);
   }, [type]);
 
   // const validate = results.meals.length > 1;
