@@ -1,3 +1,5 @@
 const SET_API = 'SET_API';
+const SET_PAGE = 'SET_PAGE';
+const SET_RESULTS = 'SET_RESULTS';
 
-export default SET_API;
+export { SET_API, SET_PAGE, SET_RESULTS };
