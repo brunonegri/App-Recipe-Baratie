@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import setApiAction from '../redux/Actions';
+import { setApiAction } from '../redux/Actions';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
@@ -20,27 +20,27 @@ function Header({ pageName, dispatchSetApi }) {
   };
 
   const setPageName = () => {
-    console.log(history.location.pathname);
+    // console.log(history.location.pathname);
     if (history.location.pathname === '/profile') {
       setTitle('Profile');
     }
     if (history.location.pathname === '/drinks') {
-      dispatchSetApi('cocktail');
       setTitle('Drinks');
+      dispatchSetApi('cocktail');
     }
     if (history.location.pathname === '/foods') {
-      dispatchSetApi('meal');
       setTitle('Foods');
+      dispatchSetApi('meal');
     }
   };
 
   useEffect(() => {
     setPageName();
-  }, [history.location.pathname]);
+  }, [history.location.pathname, pageName]);
 
   const searchIconValidate = title === 'Profile'
    || title === 'Done Recipes' || title === 'Favorites Recipes';
-  console.log(searchIconValidate);
+  // console.log(searchIconValidate);
   return (
     <div>
       <button
@@ -78,7 +78,7 @@ function Header({ pageName, dispatchSetApi }) {
 }
 
 const mapStateToProps = (state) => ({
-  pageName: state.page.page,
+  pageName: state.page.setPage,
 });
 
 const mapDispatchToProps = (dispatch) => ({

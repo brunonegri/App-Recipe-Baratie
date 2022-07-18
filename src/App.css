@@ -15,9 +15,24 @@
   max-height: 80vh;
 }
 
+.container-recipes {
+  display: flex;
+  flex-direction: column;
+
+  /* flex-wrap: wrap; */
+  max-height: 640px;
+  max-width: 360px;
+  z-index: 1;
+}
+
 .footer-container {
   bottom: 0;
   position: fixed;
+  z-index: 0;
+}
+
+.card-image {
+  width: 30px;
 }
 
 /*

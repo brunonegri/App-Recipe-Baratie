@@ -1,7 +1,9 @@
-import SET_API from '../Actions/actionTypes';
+import { SET_API, SET_PAGE, SET_RESULTS } from '../Actions/actionTypes';
 
 const initialState = {
-  setApi: '',
+  setApi: 'meal',
+  setPage: 'Foods',
+  setResults: [],
 };
 
 const page = (state = initialState, action) => {
@@ -9,6 +11,12 @@ const page = (state = initialState, action) => {
   case SET_API:
     return { ...state,
       setApi: action.set };
+  case SET_PAGE:
+    return { ...state,
+      setPage: action.set };
+  case SET_RESULTS:
+    return { ...state,
+      setResults: action.set };
   default:
     return state;
   }
