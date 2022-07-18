@@ -1,5 +1,3 @@
-const SET_PAGE = 'SET_PAGE';
+const SET_API = 'SET_API';
 
-export {
-    SET_PAGE,
-};
+export default SET_API;
