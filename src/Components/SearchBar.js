@@ -39,6 +39,7 @@ function SearchBar({ type }) {
         name="search"
         type="text"
         data-testid="search-input"
+        placeholder="Search"
         onChange={ handleSelect }
       />
       <label htmlFor="ingredient-search">

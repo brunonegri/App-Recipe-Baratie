@@ -41,6 +41,7 @@ function Login({ history }) {
         data-testid="email-input"
         name="email"
         value={ userEmail }
+        placeholder="Email"
         onChange={ handleEmail }
       />
       <input
@@ -48,6 +49,7 @@ function Login({ history }) {
         data-testid="password-input"
         name="password"
         value={ userPassword }
+        placeholder="Password"
         onChange={ handlePassword }
       />
       <button
