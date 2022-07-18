@@ -1,11 +1,10 @@
 import {
-    SET_PAGE,
+  SET_PAGE,
 } from './actionTypes';
-
 
 const setPageAction = (set) => ({
   type: SET_PAGE,
-  set,  
+  set,
 });
 
 export default setPageAction;

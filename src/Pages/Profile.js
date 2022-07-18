@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import Footer from '../Components/Footer';
+import Header from '../Components/Header';
 
 function Profile() {
   const history = useHistory();
@@ -9,10 +10,11 @@ function Profile() {
 
   return (
     <div>
+      <Header />
       <header title="Profile" />
       <div>
         <div>
-          <h3 data-testid="profile-email">{userEmail}</h3>
+          <h3 data-testid="profile-email">{userEmail.email}</h3>
         </div>
         <button
           type="button"
