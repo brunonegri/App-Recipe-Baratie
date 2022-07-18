@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import setPageAction from '../redux/Actions';
+import setApiAction from '../redux/Actions';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-function Header({ pageName, dispatchPageName }) {
+function Header({ pageName, dispatchSetApi }) {
   const history = useHistory();
 
   const goToProfile = () => {
-    dispatchPageName('Profile');
     history.push('/profile');
   };
   const [visivel, setVisivel] = useState(false);
@@ -26,9 +25,11 @@ function Header({ pageName, dispatchPageName }) {
       setTitle('Profile');
     }
     if (history.location.pathname === '/drinks') {
+      dispatchSetApi('cocktail');
       setTitle('Drinks');
     }
     if (history.location.pathname === '/foods') {
+      dispatchSetApi('meal');
       setTitle('Foods');
     }
   };
@@ -81,12 +82,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchPageName: (pageName) => dispatch(setPageAction(pageName)),
+  dispatchSetApi: (api) => dispatch(setApiAction(api)),
 });
-
 Header.propTypes = {
   pageName: PropTypes.string.isRequired,
-  dispatchPageName: PropTypes.func.isRequired,
+  dispatchSetApi: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

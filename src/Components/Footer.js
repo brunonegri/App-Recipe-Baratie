@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import setPageAction from '../redux/Actions';
+import setApiAction from '../redux/Actions';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 
-const Footer = ({ dispatchPageName }) => {
+const Footer = ({ dispatchSetApi }) => {
   const history = useHistory();
   const handleDrinkClick = () => {
-    dispatchPageName('Drinks');
+    dispatchSetApi('cocktail');
     history.push('/drinks');
   };
   const handleMealClick = () => {
-    dispatchPageName('Foods');
+    dispatchSetApi('meal');
     history.push('/foods');
   };
 
@@ -45,11 +45,11 @@ const Footer = ({ dispatchPageName }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchPageName: (pageName) => dispatch(setPageAction(pageName)),
+  dispatchSetApi: (api) => dispatch(setApiAction(api)),
 });
 
 Footer.propTypes = {
-  dispatchPageName: PropTypes.func.isRequired,
+  dispatchSetApi: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Footer);

@@ -15,6 +15,7 @@ function SearchBar({ type }) {
 
   const handleClick = async () => {
     const { filter, search } = filterSearch;
+    console.log(filterSearch);
     if (filter === 'ingredient-search') {
       const oi = await fetchRecipeInfos(type, 'filter', 'i', search);
       console.log(oi);

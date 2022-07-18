@@ -1,10 +1,8 @@
-import {
-  SET_PAGE,
-} from './actionTypes';
+import SET_API from './actionTypes';
 
-const setPageAction = (set) => ({
-  type: SET_PAGE,
+const setApiAction = (set) => ({
+  type: SET_API,
   set,
 });
 
-export default setPageAction;
+export default setApiAction;

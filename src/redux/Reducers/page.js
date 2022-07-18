@@ -1,15 +1,14 @@
-import { SET_PAGE } from '../Actions/actionTypes';
+import SET_API from '../Actions/actionTypes';
 
 const initialState = {
-  page: '',
   setApi: '',
 };
 
 const page = (state = initialState, action) => {
   switch (action.type) {
-  case SET_PAGE:
+  case SET_API:
     return { ...state,
-      page: action.set };
+      setApi: action.set };
   default:
     return state;
   }
