@@ -5,7 +5,7 @@ import App from '../../App';
 import userEvent from '@testing-library/user-event';
 
 describe('Testando o componente Header', () => {
-  test('Verificando se os elementos são renderizados', () => {
+  test('Verificando se os elementos são renderizados.', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/foods');
 
@@ -19,7 +19,7 @@ describe('Testando o componente Header', () => {
     expect(searchIcon).toBeInTheDocument();
   });
 
-  test('Verifica se é redirecionado para a página do perfil', () => {
+  test('Verifica se é redirecionado para a página do perfil.', () => {
     const { history } = renderWithRouter(<App />);
 
     localStorage.setItem('user', JSON.stringify({ email: 'teste@teste.com' }));
@@ -30,7 +30,7 @@ describe('Testando o componente Header', () => {
     expect(history.location.pathname).toBe('/profile');
   });
 
-  test('Verifica se a barra de pesquisa aparece ao clicar na lupa', () => {
+  test('Verifica se a barra de pesquisa aparece ao clicar na lupa.', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/foods');
 
