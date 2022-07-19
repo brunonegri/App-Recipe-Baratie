@@ -1,8 +1,8 @@
 import { SET_API, SET_PAGE, SET_RESULTS } from '../Actions/actionTypes';
 
 const initialState = {
-  setApi: 'meal',
-  setPage: 'Foods',
+  setApi: '',
+  setPage: '',
   setResults: [],
 };
 

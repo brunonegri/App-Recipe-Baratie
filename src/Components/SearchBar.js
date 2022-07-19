@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { setResultsAction } from '../redux/Actions/index';
-import { fetchRecipeInfos, fetchSearch } from '../0 - Services/API/requestAPI';
+import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 
-function SearchBar({ type, dispatchResults }) {
-  const history = useHistory();
+function SearchBar({ results, type, dispatchResults }) {
   const [filterSearch, setFilterSearch] = useState({});
-  const [filterResults, setFilterResults] = useState([]);
+  const [filterResults, setFilterResults] = useState(results);
   console.log(filterResults);
 
   const handleSelect = ({ target: { value, name } }) => {
@@ -17,19 +15,12 @@ function SearchBar({ type, dispatchResults }) {
       [name]: value,
     }));
   };
-  const oneResult = async () => {
-    if (type === 'meal') {
-      const { meals } = await filterResults;
-      if (meals.length === 1) {
-        history.push(`/foods/${meals[0].idMeal}`);
-      }
-    } else {
-      const { drinks } = await filterResults;
-      if (drinks.length === 1) {
-        history.push(`/drinks/${drinks[0].idDrink}`);
-      }
-    }
-  };
+
+  // const noResults = () => {
+  //   if (!filterResults) {
+  //     global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  //   }
+  // };
 
   useEffect(() => {
     dispatchResults(filterResults);
@@ -40,21 +31,19 @@ function SearchBar({ type, dispatchResults }) {
     console.log(filterSearch);
     if (filter === 'ingredient-search') {
       const oi = await fetchRecipeInfos(type, 'filter', 'i', search);
-      setFilterResults(await fetchSearch(oi));
-      oneResult();
-      return oi;
+      setFilterResults(await oi.drinks || oi.meals);
+      // noResults();
     } if (filter === 'name-search') {
       const oi = await fetchRecipeInfos(type, 'search', 's', search);
-      setFilterResults(await fetchSearch(oi));
-      await oneResult();
-      return oi;
+      setFilterResults(oi.drinks || oi.meals);
+      // noResults();
     } if (filter === 'first-letter') {
       if (search.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
       const oi = await fetchRecipeInfos(type, 'search', 'f', search);
-      setFilterResults(await fetchSearch(oi));
-      return oi;
+      setFilterResults(oi.drinks || oi.meals);
+      // noResults();
     }
   };
   return (
@@ -121,6 +110,7 @@ function SearchBar({ type, dispatchResults }) {
 
 const mapStateToProps = (state) => ({
   type: state.page.setApi,
+  results: state.page.setResults,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -129,6 +119,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 SearchBar.propTypes = {
   type: PropTypes.string.isRequired,
+  results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   dispatchResults: PropTypes.func.isRequired,
 };
 

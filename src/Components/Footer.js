@@ -9,14 +9,14 @@ import mealIcon from '../images/mealIcon.svg';
 const Footer = ({ dispatchSetApi, dispatchPageName }) => {
   const history = useHistory();
   const handleDrinkClick = () => {
-    history.push('/drinks');
     dispatchSetApi('cocktail');
     dispatchPageName('Drinks');
+    history.push('/drinks');
   };
   const handleMealClick = () => {
-    history.push('/foods');
     dispatchSetApi('meal');
     dispatchPageName('Foods');
+    history.push('/foods');
   };
 
   return (
