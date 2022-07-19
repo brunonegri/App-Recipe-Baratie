@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 import { setResultsAction } from '../redux/Actions/index';
+import Recomendation from '../Components/Recomendation';
 
 function DrinkRecipeDetails(props) {
   console.log(props);
   const { match: { params: { id } }, results, dispatchResults } = props;
+  const [ingredients, setIngredients] = useState([]);
+  const [recomendation, setRecomendation] = useState([]);
 
   useEffect(() => {
     async function fetchApi() {
@@ -15,10 +18,69 @@ function DrinkRecipeDetails(props) {
     }
     fetchApi();
   }, []);
+
+  useEffect(() => {
+    async function fetchApi() {
+      const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');
+      const n1 = 6;
+      setRecomendation(await oi.drinks.slice(0, n1));
+    }
+    fetchApi();
+  }, []);
+
+  useEffect(() => {
+    const setArrayIngredients = async () => {
+      const n1 = 17;
+      const n2 = 31;
+      const n3 = 32;
+      const n4 = 46;
+      if (results.length !== 0) {
+        const arrayIngredients = await Object.values(results[0]).slice(n1, n2);
+        const filterIngredients = arrayIngredients.filter((e) => e !== '' && e !== null);
+        const arrayMedidas = await Object.values(results[0]).slice(n3, n4);
+        const filterMedidas = arrayMedidas.filter((e) => e !== '' && e !== null);
+        const arrayNovo = [];
+        filterIngredients.forEach((e, i) => {
+          arrayNovo.push(`${filterMedidas[i]} - ${e}`);
+        });
+        setIngredients(arrayNovo);
+      }
+    };
+    setArrayIngredients();
+  }, [results]);
+
+  console.log(recomendation);
   console.log(results);
   return (
-
-    <h1>{id}</h1>
+    results.length === 0 ? <h1>Loading</h1> : (
+      <div>
+        <h1>{id}</h1>
+        <img
+          data-testid="recipe-photo"
+          src={ results[0].strDrinkThumb }
+          alt="DrinkThumb"
+        />
+        <h2 data-testid="recipe-title">{results[0].strDrink}</h2>
+        <p data-testid="recipe-category">{results[0].strCategory}</p>
+        {ingredients.map((e, i) => (
+          <li
+            data-testid={ `${i}-ingredient-name-and-measure` }
+            key={ i }
+          >
+            {e}
+          </li>))}
+        <p data-testid="instructions">{results[0].strInstructions}</p>
+        {/* <div data-testid="${}-recomendation-card">
+            COLOCAR CARD
+          </div> */}
+        {recomendation.map((e, i) => (<Recomendation
+          datatest={ `${i}-recomendation-card` }
+          key={ i }
+          index={ i }
+          img={ e.strDrinkThumb }
+          name={ e.strDrink }
+        />))}
+      </div>)
   );
 }
 
