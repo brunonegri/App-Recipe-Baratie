@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 
 function Profile() {
+  const setUserDefault = () => {
+    const obj = {
+      email: 'email@email.com',
+    };
+    const test = JSON.stringify(obj);
+    localStorage.setItem('user', test);
+  };
+  useEffect(() => {
+    setUserDefault();
+  }, []);
   const history = useHistory();
   const userEmail = JSON.parse(localStorage.getItem('user'));
 
