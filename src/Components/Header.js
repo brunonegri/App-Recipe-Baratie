@@ -6,6 +6,7 @@ import { setApiAction } from '../redux/Actions';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import CategoriesButtons from './CategoriesButtons';
 
 function Header({ pageName, dispatchSetApi }) {
   const history = useHistory();
@@ -70,9 +71,9 @@ function Header({ pageName, dispatchSetApi }) {
           />
         </button>
       )}
-      {visivel === true && (
+      {visivel === true ? (
         <SearchBar />
-      )}
+      ) : (<CategoriesButtons />)}
     </div>
   );
 }

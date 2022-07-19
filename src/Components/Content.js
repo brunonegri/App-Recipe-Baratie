@@ -12,13 +12,13 @@ function Content() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/foods" component={ MainFoods } />
-      <Route path="/foods/:id" component={ RecipeDetails } />
-      <Route path="/drinks" component={ MainDrinks } />
-      <Route path="/drinks/:id" component={ RecipeDetails } />
-      <Route path="/profile" component={ Profile } />
-      <Route path="/done-recipes" component={ DoneRecipes } />
-      <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+      <Route exact path="/foods" component={ MainFoods } />
+      <Route exact path="/foods/:id" component={ RecipeDetails } />
+      <Route exact path="/drinks" component={ MainDrinks } />
+      <Route exact path="/drinks/:id" component={ RecipeDetails } />
+      <Route exact path="/profile" component={ Profile } />
+      <Route exact path="/done-recipes" component={ DoneRecipes } />
+      <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
     </Switch>
   );
 }
