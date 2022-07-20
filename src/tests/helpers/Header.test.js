@@ -63,7 +63,7 @@ describe('Testando o componente Header', () => {
     expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
   });
 
-  test('Verifica os inputs radio da barra de pesquisa.', () => {
+  test('Verifica os buttons de Drink, Done/Favorite recipes.', () => {
     const { history } = renderWithRouter(<App />);
 
     const inputEmail = screen.getByTestId('email-input');
