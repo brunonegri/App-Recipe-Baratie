@@ -6,19 +6,25 @@ import { setResultsAction } from '../redux/Actions/index';
 import Recomendation from '../Components/Recomendation';
 
 function FoodRecipeDetails(props) {
-  console.log(props);
   const { match: { params: { id } }, results, dispatchResults } = props;
-
   const [ingredients, setIngredients] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
+  const [startRecipe, setStartRecipe] = useState([]);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     async function fetchApi() {
       const oi = await fetchRecipeInfos('meal', 'lookup', 'i', id);
       dispatchResults(await oi.meals);
     }
+    const localRecipe = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    setStartRecipe(localRecipe);
     fetchApi();
   }, []);
+
+  useEffect(() => {
+    startRecipe.find((e) => e === id && setStarted(true));
+  }, [startRecipe]);
 
   useEffect(() => {
     async function fetchApi() {
@@ -50,8 +56,18 @@ function FoodRecipeDetails(props) {
 
     setArrayIngredients();
   }, [results]);
-  console.log(recomendation);
-  console.log(results);
+
+  const handleStartRecipe = () => {
+    const localRecipe = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    console.log(localRecipe);
+    localRecipe.push(id);
+    localStorage.setItem('doneRecipes', JSON.stringify(localRecipe));
+    setStartRecipe(localRecipe);
+  };
+
+  const handleContinueRecipe = () => {
+
+  };
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
@@ -72,14 +88,15 @@ function FoodRecipeDetails(props) {
           </li>))}
         <p data-testid="instructions">{results[0].strInstructions}</p>
 
-        <iframe
+        {results[0].strYoutube ? (<iframe
           data-testid="video"
           width="300"
           height="250"
-          src={ results[0].strYoutube.replace('watch?v=', 'embed/') }
+          src={ results[0]?.strYoutube
+            && results[0].strYoutube.replace('watch?v=', 'embed/') }
           frameBorder="0"
           title="Embedded youtube"
-        />
+        />) : null}
         <div className="recomendation-carousel">
           {recomendation.map((e, i) => (<Recomendation
             key={ i }
@@ -88,15 +105,23 @@ function FoodRecipeDetails(props) {
             name={ e.strDrink }
           />))}
         </div>
-
-        <button
-          className="start-recipe-btn"
-          data-testid="start-recipe-btn"
-          type="button"
-        >
-          Start Recipe
-        </button>
-
+        {started === false && (
+          <button
+            onClick={ handleStartRecipe }
+            className="start-recipe-btn"
+            data-testid="start-recipe-btn"
+            type="button"
+          >
+            Start Recipe
+          </button>)}
+        {started === true && (
+          <button
+            onClick={ handleContinueRecipe }
+            className="start-recipe-btn"
+            type="button"
+          >
+            Continue Recipe
+          </button>)}
       </div>)
   );
 }

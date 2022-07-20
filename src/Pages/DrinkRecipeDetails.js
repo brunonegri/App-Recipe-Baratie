@@ -9,15 +9,22 @@ function DrinkRecipeDetails(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
   const [ingredients, setIngredients] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
-  const [startRecipe, setStartRecipe] = useState(false);
+  const [startRecipe, setStartRecipe] = useState([]);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     async function fetchApi() {
       const oi = await fetchRecipeInfos('cocktail', 'lookup', 'i', id);
       dispatchResults(await oi.drinks);
     }
+    const localRecipe = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    setStartRecipe(localRecipe);
     fetchApi();
   }, []);
+
+  useEffect(() => {
+    startRecipe.find((e) => e === id && setStarted(true));
+  }, [startRecipe]);
 
   useEffect(() => {
     async function fetchApi() {
@@ -43,22 +50,28 @@ function DrinkRecipeDetails(props) {
         filterIngredients.forEach((e, i) => {
           arrayNovo.push(`${filterMedidas[i]} - ${e}`);
         });
-        // console.log(Object.values(results[0]));
         setIngredients(arrayNovo);
+        console.log(Object.values(results[0]));
       }
-      // const test = await results[0].map((e) => console.log(e));
-      // const test2 = await Object.entries(results[0]);
-      // console.log(test2);
     };
     setArrayIngredients();
   }, [results]);
 
   const handleStartRecipe = () => {
-    setStartRecipe(!startRecipe);
+    const localRecipe = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    console.log(localRecipe);
+    localRecipe.push(id);
+    localStorage.setItem('doneRecipes', JSON.stringify(localRecipe));
+    setStartRecipe(localRecipe);
+  };
+
+  const handleContinueRecipe = () => {
+
   };
 
   // console.log(recomendation);
   // console.log(results[0]);
+  // console.log(startRecipe);
 
   return (
     results.length === 0 ? <h1>Loading</h1> : (
@@ -92,14 +105,23 @@ function DrinkRecipeDetails(props) {
             name={ e.strMeal }
           />))}
         </div>
-        <button
-          onClick={ handleStartRecipe }
-          className="start-recipe-btn"
-          data-testid="start-recipe-btn"
-          type="button"
-        >
-          Start Recipe
-        </button>
+        {started === false && (
+          <button
+            onClick={ handleStartRecipe }
+            className="start-recipe-btn"
+            data-testid="start-recipe-btn"
+            type="button"
+          >
+            Start Recipe
+          </button>)}
+        {started === true && (
+          <button
+            onClick={ handleContinueRecipe }
+            className="start-recipe-btn"
+            type="button"
+          >
+            Continue Recipe
+          </button>)}
       </div>)
   );
 }

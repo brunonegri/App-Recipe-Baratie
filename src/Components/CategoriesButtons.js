@@ -35,7 +35,7 @@ function CategoriesButtons({ dispatchResults }) {
     if (history.location.pathname === '/foods') {
       console.log(value);
       const requestCategories = await fetchRecipeInfos('meal', 'filter', 'c', value);
-      //   setClick(!click);
+      console.log(requestCategories);
       dispatchResults(await requestCategories.meals);
     }
   };

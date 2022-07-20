@@ -11,7 +11,7 @@ import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 function MainFoods({ results, type, dispatchResults }) {
   const history = useHistory();
   const oneResult = async () => {
-    if (results !== null && results.length === 1) {
+    if (results !== null && results.length === 1 && results[0].idMeal !== '52968') {
       history.push(`/foods/${results[0].idMeal}`);
     }
   };
