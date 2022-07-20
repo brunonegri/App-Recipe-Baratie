@@ -8,7 +8,7 @@ import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 function CategoriesButtons({ dispatchResults }) {
   const history = useHistory();
   const [categories, setCategories] = useState();
-  //   const [click, setClick] = useState({});
+  const [counter, setCounter] = useState(0);
 
   const getCategories = async () => {
     if (history.location.pathname === '/drinks') {
@@ -23,23 +23,6 @@ function CategoriesButtons({ dispatchResults }) {
     }
   };
 
-  const handleClick = async ({ target: { value } }) => {
-    if (history.location.pathname === '/drinks') {
-      console.log(value);
-      const requestCategories = await fetchRecipeInfos(
-        'cocktail', 'filter', 'c', value,
-      );
-      //   setClick(!click);
-      dispatchResults(await requestCategories.drinks);
-    }
-    if (history.location.pathname === '/foods') {
-      console.log(value);
-      const requestCategories = await fetchRecipeInfos('meal', 'filter', 'c', value);
-      console.log(requestCategories);
-      dispatchResults(await requestCategories.meals);
-    }
-  };
-
   const defaultFetch = async () => {
     if (history.location.pathname === '/drinks') {
       const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');
@@ -51,15 +34,35 @@ function CategoriesButtons({ dispatchResults }) {
     }
   };
 
+  const resetButton = (valor) => {
+    let possibilidades = '';
+    setCounter(counter + 1);
+    possibilidades = `${valor}${counter}`;
+    if (possibilidades === `${valor}1`) {
+      setCounter(0);
+      possibilidades = '';
+      defaultFetch();
+    }
+  };
+
+  const handleClick = async ({ target: { value } }) => {
+    if (history.location.pathname === '/drinks') {
+      const requestCategories = await fetchRecipeInfos(
+        'cocktail', 'filter', 'c', value,
+      );
+      resetButton(value);
+      dispatchResults(await requestCategories.drinks);
+    }
+    if (history.location.pathname === '/foods') {
+      const requestCategories = await fetchRecipeInfos('meal', 'filter', 'c', value);
+      resetButton(value);
+      dispatchResults(await requestCategories.meals);
+    }
+  };
+
   useEffect(() => {
     getCategories();
   }, []);
-
-  //   useEffect(() => {
-  //     if (click === false) {
-  //       defaultFetch();
-  //     }
-  //   }, [click]);
 
   const mN = 5;
   return (
