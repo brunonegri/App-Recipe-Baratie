@@ -28,15 +28,25 @@ body {
   width: 100px;
 }
 
+.ingredient-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .recomedation-img {
   width: 180px;
 }
 
 .recomendation-carousel {
-  border: 2px solid red;
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
+}
+
+.start-recipe-btn {
+  bottom: 0;
+  position: fixed;
+  z-index: 0;
 }
 
 

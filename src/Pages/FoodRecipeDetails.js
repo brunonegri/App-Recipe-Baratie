@@ -89,6 +89,14 @@ function FoodRecipeDetails(props) {
           />))}
         </div>
 
+        <button
+          className="start-recipe-btn"
+          data-testid="start-recipe-btn"
+          type="button"
+        >
+          Start Recipe
+        </button>
+
       </div>)
   );
 }

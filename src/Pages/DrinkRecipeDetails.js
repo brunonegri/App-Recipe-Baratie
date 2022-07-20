@@ -9,6 +9,7 @@ function DrinkRecipeDetails(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
   const [ingredients, setIngredients] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
+  const [startRecipe, setStartRecipe] = useState(false);
 
   useEffect(() => {
     async function fetchApi() {
@@ -52,6 +53,10 @@ function DrinkRecipeDetails(props) {
     setArrayIngredients();
   }, [results]);
 
+  const handleStartRecipe = () => {
+    setStartRecipe(!startRecipe);
+  };
+
   // console.log(recomendation);
   // console.log(results[0]);
 
@@ -67,13 +72,30 @@ function DrinkRecipeDetails(props) {
         <h2 data-testid="recipe-title">{results[0].strDrink}</h2>
         <p>{results[0].strCategory}</p>
         <p data-testid="recipe-category">{results[0].strAlcoholic}</p>
-        {ingredients.map((e, i) => (
-          <li
-            data-testid={ `${i}-ingredient-name-and-measure` }
-            key={ i }
-          >
-            {e}
-          </li>))}
+        <div className="ingredient-container">
+          {ingredients.map((e, i) => (
+            !startRecipe
+              ? (
+                <li
+                  data-testid={ `${i}-ingredient-name-and-measure` }
+                  key={ i }
+                >
+                  {e}
+                </li>)
+              : (
+                <label htmlFor="ingredient">
+                  <input
+                    id="ingredient"
+                    type="checkbox"
+                    data-testid={ `${i}-ingredient-name-and-measure` }
+                    key={ i }
+                    value={ e }
+                  />
+                  {e}
+                </label>
+              )
+          ))}
+        </div>
         <p data-testid="instructions">{results[0].strInstructions}</p>
         <div className="recomendation-carousel">
           {recomendation.map((e, i) => (<Recomendation
@@ -84,6 +106,14 @@ function DrinkRecipeDetails(props) {
             name={ e.strMeal }
           />))}
         </div>
+        <button
+          onClick={ handleStartRecipe }
+          className="start-recipe-btn"
+          data-testid="start-recipe-btn"
+          type="button"
+        >
+          Start Recipe
+        </button>
       </div>)
   );
 }
