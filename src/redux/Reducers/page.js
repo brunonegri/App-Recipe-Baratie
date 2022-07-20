@@ -1,9 +1,10 @@
-import { SET_API, SET_PAGE, SET_RESULTS } from '../Actions/actionTypes';
+import { SET_API, SET_ID, SET_PAGE, SET_RESULTS } from '../Actions/actionTypes';
 
 const initialState = {
   setApi: '',
   setPage: '',
   setResults: [],
+  setId: 0,
 };
 
 const page = (state = initialState, action) => {
@@ -17,6 +18,9 @@ const page = (state = initialState, action) => {
   case SET_RESULTS:
     return { ...state,
       setResults: action.set };
+  case SET_ID:
+    return { ...state,
+      setId: action.set };
   default:
     return state;
   }

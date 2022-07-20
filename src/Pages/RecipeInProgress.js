@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 import { setResultsAction } from '../redux/Actions/index';
-// import Recomendation from './Recomendation';
 
 function RecipeInProgress(props) {
+  console.log(props);
   const { match: { params: { id } }, results, dispatchResults } = props;
   const [ingredients, setIngredients] = useState([]);
-  // const [recomendation, setRecomendation] = useState([]);
   const [finishRecipe, setFinishRecipe] = useState(false);
 
   useEffect(() => {
@@ -18,15 +17,6 @@ function RecipeInProgress(props) {
     }
     fetchApi();
   }, []);
-
-  // useEffect(() => {
-  //   async function fetchApi() {
-  //     const oi = await fetchRecipeInfos('meal', 'search', 's', '');
-  //     const n1 = 6;
-  //     setRecomendation(await oi.meals.slice(0, n1));
-  //   }
-  //   fetchApi();
-  // }, []);
 
   useEffect(() => {
     const setArrayIngredients = async () => {
@@ -82,15 +72,6 @@ function RecipeInProgress(props) {
           ))}
         </div>
         <p data-testid="instructions">{results[0].strInstructions}</p>
-        {/* <div className="recomendation-carousel">
-          {recomendation.map((e, i) => (<Recomendation
-            datatest={ `${i}-recomendation-card` }
-            key={ i }
-            index={ i }
-            img={ e.strMealThumb }
-            name={ e.strMeal }
-          />))}
-        </div> */}
         <button
           onClick={ handleFinishRecipe }
           className="finish-recipe-btn"
