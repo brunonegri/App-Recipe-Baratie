@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 import { setResultsAction } from '../redux/Actions/index';
-import Recomendation from '../Components/Recomendation';
+// import Recomendation from './Recomendation';
 
-function DrinkRecipeDetails(props) {
+function RecipeInProgress(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
   const [ingredients, setIngredients] = useState([]);
-  const [recomendation, setRecomendation] = useState([]);
-  const [startRecipe, setStartRecipe] = useState(false);
+  // const [recomendation, setRecomendation] = useState([]);
+  const [finishRecipe, setFinishRecipe] = useState(false);
 
   useEffect(() => {
     async function fetchApi() {
@@ -19,14 +19,14 @@ function DrinkRecipeDetails(props) {
     fetchApi();
   }, []);
 
-  useEffect(() => {
-    async function fetchApi() {
-      const oi = await fetchRecipeInfos('meal', 'search', 's', '');
-      const n1 = 6;
-      setRecomendation(await oi.meals.slice(0, n1));
-    }
-    fetchApi();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchApi() {
+  //     const oi = await fetchRecipeInfos('meal', 'search', 's', '');
+  //     const n1 = 6;
+  //     setRecomendation(await oi.meals.slice(0, n1));
+  //   }
+  //   fetchApi();
+  // }, []);
 
   useEffect(() => {
     const setArrayIngredients = async () => {
@@ -43,22 +43,15 @@ function DrinkRecipeDetails(props) {
         filterIngredients.forEach((e, i) => {
           arrayNovo.push(`${filterMedidas[i]} - ${e}`);
         });
-        // console.log(Object.values(results[0]));
         setIngredients(arrayNovo);
       }
-      // const test = await results[0].map((e) => console.log(e));
-      // const test2 = await Object.entries(results[0]);
-      // console.log(test2);
     };
     setArrayIngredients();
   }, [results]);
 
-  const handleStartRecipe = () => {
-    setStartRecipe(!startRecipe);
+  const handleFinishRecipe = () => {
+    setFinishRecipe(!finishRecipe);
   };
-
-  // console.log(recomendation);
-  // console.log(results[0]);
 
   return (
     results.length === 0 ? <h1>Loading</h1> : (
@@ -66,24 +59,30 @@ function DrinkRecipeDetails(props) {
         <img
           className="recipe-img"
           data-testid="recipe-photo"
-          src={ results[0].strDrinkThumb }
+          src={ results[0].strDrinkThumb || results[0].strMealThumb }
           alt="DrinkThumb"
         />
-        <h2 data-testid="recipe-title">{results[0].strDrink}</h2>
-        <p>{results[0].strCategory}</p>
-        <p data-testid="recipe-category">{results[0].strAlcoholic}</p>
+        <h2 data-testid="recipe-title">{results[0].strDrink || results[0].strMeal}</h2>
+        <button data-testid="share-btn" type="button">Share</button>
+        <button data-testid="favorite-btn" type="button">Favorite</button>
+        <p data-testid="recipe-category">
+          {results[0].strAlcoholic || results[0].strCategory}
+        </p>
         <div className="ingredient-container">
           {ingredients.map((e, i) => (
-            <li
-              data-testid={ `${i}-ingredient-name-and-measure` }
-              key={ i }
-            >
+            <label key={ i } htmlFor="ingredient">
+              <input
+                id="ingredient"
+                type="checkbox"
+                data-testid={ `${i}-ingredient-step` }
+                value={ e }
+              />
               {e}
-            </li>
+            </label>
           ))}
         </div>
         <p data-testid="instructions">{results[0].strInstructions}</p>
-        <div className="recomendation-carousel">
+        {/* <div className="recomendation-carousel">
           {recomendation.map((e, i) => (<Recomendation
             datatest={ `${i}-recomendation-card` }
             key={ i }
@@ -91,11 +90,11 @@ function DrinkRecipeDetails(props) {
             img={ e.strMealThumb }
             name={ e.strMeal }
           />))}
-        </div>
+        </div> */}
         <button
-          onClick={ handleStartRecipe }
-          className="start-recipe-btn"
-          data-testid="start-recipe-btn"
+          onClick={ handleFinishRecipe }
+          className="finish-recipe-btn"
+          data-testid="finish-recipe-btn"
           type="button"
         >
           Start Recipe
@@ -112,10 +111,10 @@ const mapStateToProps = (state) => ({
   results: state.page.setResults,
 });
 
-DrinkRecipeDetails.propTypes = {
+RecipeInProgress.propTypes = {
   dispatchResults: PropTypes.func.isRequired,
   match: PropTypes.shape(PropTypes.shape(PropTypes.string)).isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DrinkRecipeDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeInProgress);

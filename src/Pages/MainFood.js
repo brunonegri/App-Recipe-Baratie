@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { setResultsAction } from '../redux/Actions/index';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
-import Recipe from '../Components/Recipe';
+import Recipes from '../Components/Recipes';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 
 function MainFoods({ results, type, dispatchResults }) {
@@ -42,7 +42,7 @@ function MainFoods({ results, type, dispatchResults }) {
       {results === null || results.length === 0
         ? <h1>Loading...</h1>
         : results.slice(0, mN).map((e, i) => (
-          <Recipe
+          <Recipes
             key={ i }
             index={ i }
             name={ e.strMeal }
