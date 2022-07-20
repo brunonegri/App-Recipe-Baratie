@@ -67,13 +67,13 @@ describe('Testando o componente Header', () => {
     const { history } = renderWithRouter(<App />);
 
     const inputEmail = screen.getByTestId('email-input');
-    userEvent.type(inputEmail, 'teste@teste.com')
+    userEvent.type(inputEmail, 'teste@teste.com');
     const inputPassword = screen.getByTestId('password-input');
-    userEvent.type(inputPassword, '1234567')
+    userEvent.type(inputPassword, '1234567');
     const buttonLogin = screen.getByTestId('login-submit-btn');
-    userEvent.click(buttonLogin)
-    const buttonDrink = screen.getByTestId('drinks-bottom-btn')
-    userEvent.click(buttonDrink)
+    userEvent.click(buttonLogin);
+    const buttonDrink = screen.getByTestId('drinks-bottom-btn');
+    userEvent.click(buttonDrink);
 
     const test = screen.getByText(/Drinks/)
     expect(test).toBeInTheDocument()
@@ -82,20 +82,20 @@ describe('Testando o componente Header', () => {
     userEvent.click(profileIcon);
     expect(history.location.pathname).toBe('/profile');
 
-    const buttonDone = screen.getByTestId('profile-done-btn')
-    userEvent.click(buttonDone)
+    const buttonDone = screen.getByTestId('profile-done-btn');
+    userEvent.click(buttonDone);
 
-    const test2 = screen.getByText(/Done Recipes/)
-    expect(test2).toBeInTheDocument()
+    const test2 = screen.getByText(/Done Recipes/);
+    expect(test2).toBeInTheDocument();
 
     const profileIcon2 = screen.getByTestId('profile-top-btn');
     userEvent.click(profileIcon2);
     expect(history.location.pathname).toBe('/profile');
 
-    const buttonFavorite = screen.getByTestId('profile-favorite-btn')
-    userEvent.click(buttonFavorite)
+    const buttonFavorite = screen.getByTestId('profile-favorite-btn');
+    userEvent.click(buttonFavorite);
 
-    const test3 = screen.getByText(/Favorite Recipes/)
-    expect(test3).toBeInTheDocument()
+    const test3 = screen.getByText(/Favorite Recipes/);
+    expect(test3).toBeInTheDocument();
   });
 });
