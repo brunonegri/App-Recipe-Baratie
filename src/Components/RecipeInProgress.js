@@ -3,38 +3,37 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 import { setResultsAction } from '../redux/Actions/index';
-import Recomendation from '../Components/Recomendation';
+// import Recomendation from './Recomendation';
 
-function FoodRecipeDetails(props) {
-  console.log(props);
+function RecipeInProgress(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
-
   const [ingredients, setIngredients] = useState([]);
-  const [recomendation, setRecomendation] = useState([]);
+  // const [recomendation, setRecomendation] = useState([]);
+  const [finishRecipe, setFinishRecipe] = useState(false);
 
   useEffect(() => {
     async function fetchApi() {
-      const oi = await fetchRecipeInfos('meal', 'lookup', 'i', id);
-      dispatchResults(await oi.meals);
+      const oi = await fetchRecipeInfos('cocktail', 'lookup', 'i', id);
+      dispatchResults(await oi.drinks);
     }
     fetchApi();
   }, []);
 
-  useEffect(() => {
-    async function fetchApi() {
-      const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');
-      const n1 = 6;
-      setRecomendation(await oi.drinks.slice(0, n1));
-    }
-    fetchApi();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchApi() {
+  //     const oi = await fetchRecipeInfos('meal', 'search', 's', '');
+  //     const n1 = 6;
+  //     setRecomendation(await oi.meals.slice(0, n1));
+  //   }
+  //   fetchApi();
+  // }, []);
 
   useEffect(() => {
     const setArrayIngredients = async () => {
-      const n1 = 9;
-      const n2 = 28;
-      const n3 = 29;
-      const n4 = 48;
+      const n1 = 17;
+      const n2 = 31;
+      const n3 = 32;
+      const n4 = 46;
       if (results.length !== 0) {
         const arrayIngredients = await Object.values(results[0]).slice(n1, n2);
         const filterIngredients = arrayIngredients.filter((e) => e !== '' && e !== null);
@@ -47,56 +46,59 @@ function FoodRecipeDetails(props) {
         setIngredients(arrayNovo);
       }
     };
-
     setArrayIngredients();
   }, [results]);
-  console.log(recomendation);
-  console.log(results);
+
+  const handleFinishRecipe = () => {
+    setFinishRecipe(!finishRecipe);
+  };
+
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
         <img
           className="recipe-img"
           data-testid="recipe-photo"
-          src={ results[0].strMealThumb }
+          src={ results[0].strDrinkThumb || results[0].strMealThumb }
           alt="DrinkThumb"
         />
-        <h2 data-testid="recipe-title">{results[0].strMeal}</h2>
-        <p data-testid="recipe-category">{results[0].strCategory}</p>
-        {ingredients.map((e, i) => (
-          <li
-            data-testid={ `${i}-ingredient-name-and-measure` }
-            key={ i }
-          >
-            {e}
-          </li>))}
+        <h2 data-testid="recipe-title">{results[0].strDrink || results[0].strMeal}</h2>
+        <button data-testid="share-btn" type="button">Share</button>
+        <button data-testid="favorite-btn" type="button">Favorite</button>
+        <p data-testid="recipe-category">
+          {results[0].strAlcoholic || results[0].strCategory}
+        </p>
+        <div className="ingredient-container">
+          {ingredients.map((e, i) => (
+            <label key={ i } htmlFor="ingredient">
+              <input
+                id="ingredient"
+                type="checkbox"
+                data-testid={ `${i}-ingredient-step` }
+                value={ e }
+              />
+              {e}
+            </label>
+          ))}
+        </div>
         <p data-testid="instructions">{results[0].strInstructions}</p>
-
-        <iframe
-          data-testid="video"
-          width="300"
-          height="250"
-          src={ results[0].strYoutube.replace('watch?v=', 'embed/') }
-          frameBorder="0"
-          title="Embedded youtube"
-        />
-        <div className="recomendation-carousel">
+        {/* <div className="recomendation-carousel">
           {recomendation.map((e, i) => (<Recomendation
+            datatest={ `${i}-recomendation-card` }
             key={ i }
             index={ i }
-            img={ e.strDrinkThumb }
-            name={ e.strDrink }
+            img={ e.strMealThumb }
+            name={ e.strMeal }
           />))}
-        </div>
-
+        </div> */}
         <button
-          className="start-recipe-btn"
-          data-testid="start-recipe-btn"
+          onClick={ handleFinishRecipe }
+          className="finish-recipe-btn"
+          data-testid="finish-recipe-btn"
           type="button"
         >
           Start Recipe
         </button>
-
       </div>)
   );
 }
@@ -109,10 +111,10 @@ const mapStateToProps = (state) => ({
   results: state.page.setResults,
 });
 
-FoodRecipeDetails.propTypes = {
+RecipeInProgress.propTypes = {
   dispatchResults: PropTypes.func.isRequired,
   match: PropTypes.shape(PropTypes.shape(PropTypes.string)).isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodRecipeDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeInProgress);

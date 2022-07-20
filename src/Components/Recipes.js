@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-function Recipe({ index, name, img, results }) {
+function Recipes({ index, name, img, results }) {
   const history = useHistory();
   const handleClick = () => {
     if (history.location.pathname === '/drinks') {
@@ -37,11 +37,11 @@ const mapStateToProps = (state) => ({
   results: state.page.setResults,
 });
 
-Recipe.propTypes = {
+Recipes.propTypes = {
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 
-export default connect(mapStateToProps)(Recipe);
+export default connect(mapStateToProps)(Recipes);

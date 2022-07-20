@@ -5,6 +5,7 @@ function Login({ history }) {
   const [userEmail, setEmail] = useState('');
   const [userPassword, setPassword] = useState('');
   const [valid, setValid] = useState(true);
+
   const CheckUserInfo = () => {
     const minPassword = 6;
     const emailValidate = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

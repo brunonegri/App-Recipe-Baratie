@@ -21,7 +21,6 @@ function Header({ pageName, dispatchSetApi }) {
   };
 
   const setPageName = () => {
-    // console.log(history.location.pathname);
     if (history.location.pathname === '/profile') {
       setTitle('Profile');
     }
@@ -33,6 +32,12 @@ function Header({ pageName, dispatchSetApi }) {
       setTitle('Foods');
       dispatchSetApi('meal');
     }
+    if (history.location.pathname === '/done-recipes') {
+      setTitle('Done Recipes');
+    }
+    if (history.location.pathname === '/favorite-recipes') {
+      setTitle('Favorite Recipes');
+    }
   };
 
   useEffect(() => {
@@ -40,8 +45,7 @@ function Header({ pageName, dispatchSetApi }) {
   }, [history.location.pathname, pageName]);
 
   const searchIconValidate = title === 'Profile'
-   || title === 'Done Recipes' || title === 'Favorites Recipes';
-  // console.log(searchIconValidate);
+   || title === 'Done Recipes' || title === 'Favorite Recipes';
   return (
     <div>
       <button
@@ -73,7 +77,7 @@ function Header({ pageName, dispatchSetApi }) {
       )}
       {visivel === true ? (
         <SearchBar />
-      ) : (<CategoriesButtons />)}
+      ) : (!searchIconValidate && (<CategoriesButtons />))}
     </div>
   );
 }
