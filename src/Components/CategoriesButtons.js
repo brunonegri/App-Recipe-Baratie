@@ -22,7 +22,7 @@ function CategoriesButtons({ dispatchResults }) {
       console.log(categories);
     }
   };
-
+  // Merge
   const defaultFetch = async () => {
     if (history.location.pathname === '/drinks') {
       const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');

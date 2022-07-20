@@ -173,6 +173,9 @@ FoodRecipeDetails.propTypes = {
   dispatchResults: PropTypes.func.isRequired,
   match: PropTypes.shape(PropTypes.shape(PropTypes.string)).isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodRecipeDetails);
