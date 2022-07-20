@@ -3,17 +3,28 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 import { setResultsAction } from '../redux/Actions/index';
+import Recomendation from '../Components/Recomendation';
 
 function FoodRecipeDetails(props) {
   console.log(props);
   const { match: { params: { id } }, results, dispatchResults } = props;
 
   const [ingredients, setIngredients] = useState([]);
+  const [recomendation, setRecomendation] = useState([]);
 
   useEffect(() => {
     async function fetchApi() {
       const oi = await fetchRecipeInfos('meal', 'lookup', 'i', id);
       dispatchResults(await oi.meals);
+    }
+    fetchApi();
+  }, []);
+
+  useEffect(() => {
+    async function fetchApi() {
+      const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');
+      const n1 = 6;
+      setRecomendation(await oi.drinks.slice(0, n1));
     }
     fetchApi();
   }, []);
@@ -39,7 +50,7 @@ function FoodRecipeDetails(props) {
 
     setArrayIngredients();
   }, [results]);
-
+  console.log(recomendation);
   console.log(results);
   return (
     results.length === 0 ? <h1>Loading</h1> : (
@@ -72,6 +83,13 @@ function FoodRecipeDetails(props) {
         {/* <div data-testid="${}-recomendation-card">
           COLOCAR CARD
         </div> */}
+        {recomendation.map((e, i) => (<Recomendation
+          datatest={ `${i}-recomendation-card` }
+          key={ i }
+          index={ i }
+          img={ e.strDrinkThumb }
+          name={ e.strDrink }
+        />))}
 
       </div>)
   );

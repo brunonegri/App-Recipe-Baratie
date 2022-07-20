@@ -10,21 +10,9 @@ import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 
 function MainFoods({ results, type, dispatchResults }) {
   const history = useHistory();
-  const oneResult = () => {
-    // if (!results) {
-    //   global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    //   const oi = await fetchRecipeInfos('meal', 'search', 's', '');
-    //   dispatchResults(await oi.meals);
-    // }
-    if (results.length === 1) {
+  const oneResult = async () => {
+    if (results !== null && results.length === 1) {
       history.push(`/foods/${results[0].idMeal}`);
-    }
-  };
-  const noResults = async () => {
-    if (!results) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-      const oi = await fetchRecipeInfos('meal', 'search', 's', '');
-      dispatchResults(await oi.meals);
     }
   };
   useEffect(() => {
@@ -34,18 +22,24 @@ function MainFoods({ results, type, dispatchResults }) {
     }
     fetchApi();
   }, [type]);
+
+  const nullResult = async () => {
+    const oi2 = await fetchRecipeInfos('meal', 'search', 's', '');
+    await dispatchResults(await oi2.meals);
+  };
+
   useEffect(() => {
+    if (results === null) {
+      nullResult();
+    }
     oneResult();
   }, [results]);
-  useEffect(() => {
-    noResults();
-  }, [global.alert]);
 
   const mN = 12;
   return (
     <div className="container-recipes">
       <Header />
-      {!results
+      {results === null || results.length === 0
         ? <h1>Loading...</h1>
         : results.slice(0, mN).map((e, i) => (
           <Recipe

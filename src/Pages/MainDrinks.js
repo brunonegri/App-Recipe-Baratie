@@ -10,8 +10,8 @@ import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 
 function MainDrinks({ results, type, dispatchResults }) {
   const history = useHistory();
-  const oneResult = () => {
-    if (results.length === 1) {
+  const oneResult = async () => {
+    if (results !== undefined && results.length === 1) {
       history.push(`/drinks/${results[0].idDrink}`);
     }
   };
@@ -19,20 +19,28 @@ function MainDrinks({ results, type, dispatchResults }) {
     async function fetchApi() {
       const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');
       dispatchResults(await oi.drinks);
-      console.log(results);
     }
     fetchApi();
-    oneResult();
   }, [type]);
 
+  const nullResult = async () => {
+    const oi2 = await fetchRecipeInfos('cocktail', 'search', 's', '');
+    // console.log(oi2);
+    await dispatchResults(await oi2.drinks);
+  };
+
   useEffect(() => {
+    if (results === null || results === undefined) {
+      nullResult();
+    }
     oneResult();
   }, [results]);
+  console.log(results);
   const mN = 12;
   return (
     <div className="container-recipes">
       <Header />
-      {!results
+      {results === null || results === undefined
         ? <h1>Loading...</h1>
         : results.slice(0, mN).map((e, i) => (
           <Recipe

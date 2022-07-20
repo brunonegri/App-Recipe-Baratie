@@ -1,22 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 
 function Profile() {
-  const setUserDefault = () => {
-    const obj = {
-      email: 'email@email.com',
-    };
-    const test = JSON.stringify(obj);
-    localStorage.setItem('user', test);
-  };
-  useEffect(() => {
-    setUserDefault();
-  }, []);
   const history = useHistory();
-  const userEmail = JSON.parse(localStorage.getItem('user'));
+  const setUserDefault = () => {
+    const localUser = localStorage.getItem('user');
+    if (localUser === null) {
+      const obj = {
+        email: 'email@email.com',
+      };
+      const test = JSON.stringify(obj);
+      localStorage.setItem('user', test);
+    }
+  };
+
+  const [user, setUser] = useState({
+    email: 'email@email.com',
+  });
+
+  useEffect(() => {
+    console.log('oi');
+    setUserDefault();
+    const userEmail = JSON.parse(localStorage.getItem('user'));
+    setUser(userEmail);
+  }, []);
 
   return (
     <div>
@@ -24,7 +34,7 @@ function Profile() {
       <header title="Profile" />
       <div>
         <div>
-          <h3 data-testid="profile-email">{userEmail.email}</h3>
+          <h3 data-testid="profile-email">{user.email}</h3>
         </div>
         <button
           type="button"
@@ -45,7 +55,7 @@ function Profile() {
           data-testid="profile-logout-btn"
           onClick={ () => {
             history.push('/');
-            localStorage.removeItem('user');
+            localStorage.clear();
           } }
         >
           Logout

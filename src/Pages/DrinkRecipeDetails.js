@@ -21,9 +21,9 @@ function DrinkRecipeDetails(props) {
 
   useEffect(() => {
     async function fetchApi() {
-      const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');
+      const oi = await fetchRecipeInfos('meal', 'search', 's', '');
       const n1 = 6;
-      setRecomendation(await oi.drinks.slice(0, n1));
+      setRecomendation(await oi.meals.slice(0, n1));
     }
     fetchApi();
   }, []);
@@ -43,14 +43,19 @@ function DrinkRecipeDetails(props) {
         filterIngredients.forEach((e, i) => {
           arrayNovo.push(`${filterMedidas[i]} - ${e}`);
         });
+        // console.log(Object.values(results[0]));
         setIngredients(arrayNovo);
       }
+      // const test = await results[0].map((e) => console.log(e));
+      const test2 = await Object.entries(results[0]);
+      console.log(test2);
     };
     setArrayIngredients();
   }, [results]);
 
   console.log(recomendation);
-  console.log(results);
+  console.log(results[0]);
+
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
@@ -61,7 +66,8 @@ function DrinkRecipeDetails(props) {
           alt="DrinkThumb"
         />
         <h2 data-testid="recipe-title">{results[0].strDrink}</h2>
-        <p data-testid="recipe-category">{results[0].strCategory}</p>
+        <p>{results[0].strCategory}</p>
+        <p data-testid="recipe-category">{results[0].strAlcoholic}</p>
         {ingredients.map((e, i) => (
           <li
             data-testid={ `${i}-ingredient-name-and-measure` }
@@ -77,8 +83,8 @@ function DrinkRecipeDetails(props) {
           datatest={ `${i}-recomendation-card` }
           key={ i }
           index={ i }
-          img={ e.strDrinkThumb }
-          name={ e.strDrink }
+          img={ e.strMealThumb }
+          name={ e.strMeal }
         />))}
       </div>)
   );

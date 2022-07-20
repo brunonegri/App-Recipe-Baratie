@@ -16,34 +16,51 @@ function SearchBar({ results, type, dispatchResults }) {
     }));
   };
 
-  // const noResults = () => {
-  //   if (!filterResults) {
-  //     global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  //   }
-  // };
+  const errorNull = 'Sorry, we haven\'t found any recipes for these filters.';
 
   useEffect(() => {
     dispatchResults(filterResults);
   }, [filterResults]);
 
+  const ingredientSearch = async (search) => {
+    const oi = await fetchRecipeInfos(type, 'filter', 'i', search);
+    if (oi.meals === null || oi.drinks === null) {
+      global.alert(errorNull);
+    }
+    setFilterResults(await oi.drinks || oi.meals);
+  };
+
+  const nameSearch = async (search) => {
+    const oi = await fetchRecipeInfos(type, 'search', 's', search);
+    if (oi.meals === null || oi.drinks === null) {
+      global.alert(errorNull);
+    }
+    console.log(oi);
+    setFilterResults(oi.drinks || oi.meals);
+  };
+
+  const firstLetterFilter = async (search) => {
+    if (search.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    }
+    const oi = await fetchRecipeInfos(type, 'search', 'f', search);
+    if (oi.meals === null || oi.drinks === null) {
+      global.alert(errorNull);
+    }
+    setFilterResults(oi.drinks || oi.meals);
+  };
+
   const handleClick = async () => {
     const { filter, search } = filterSearch;
     console.log(filterSearch);
     if (filter === 'ingredient-search') {
-      const oi = await fetchRecipeInfos(type, 'filter', 'i', search);
-      setFilterResults(await oi.drinks || oi.meals);
-      // noResults();
-    } if (filter === 'name-search') {
-      const oi = await fetchRecipeInfos(type, 'search', 's', search);
-      setFilterResults(oi.drinks || oi.meals);
-      // noResults();
-    } if (filter === 'first-letter') {
-      if (search.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
-      }
-      const oi = await fetchRecipeInfos(type, 'search', 'f', search);
-      setFilterResults(oi.drinks || oi.meals);
-      // noResults();
+      ingredientSearch(search);
+    }
+    if (filter === 'name-search') {
+      nameSearch(search);
+    }
+    if (filter === 'first-letter') {
+      firstLetterFilter(search);
     }
   };
   return (
