@@ -6,7 +6,6 @@ import { setResultsAction } from '../redux/Actions/index';
 import Recomendation from '../Components/Recomendation';
 
 function DrinkRecipeDetails(props) {
-  console.log(props);
   const { match: { params: { id } }, results, dispatchResults } = props;
   const [ingredients, setIngredients] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
@@ -47,20 +46,20 @@ function DrinkRecipeDetails(props) {
         setIngredients(arrayNovo);
       }
       // const test = await results[0].map((e) => console.log(e));
-      const test2 = await Object.entries(results[0]);
-      console.log(test2);
+      // const test2 = await Object.entries(results[0]);
+      // console.log(test2);
     };
     setArrayIngredients();
   }, [results]);
 
-  console.log(recomendation);
-  console.log(results[0]);
+  // console.log(recomendation);
+  // console.log(results[0]);
 
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
-        <h1>{id}</h1>
         <img
+          className="recipe-img"
           data-testid="recipe-photo"
           src={ results[0].strDrinkThumb }
           alt="DrinkThumb"
@@ -76,16 +75,15 @@ function DrinkRecipeDetails(props) {
             {e}
           </li>))}
         <p data-testid="instructions">{results[0].strInstructions}</p>
-        {/* <div data-testid="${}-recomendation-card">
-            COLOCAR CARD
-          </div> */}
-        {recomendation.map((e, i) => (<Recomendation
-          datatest={ `${i}-recomendation-card` }
-          key={ i }
-          index={ i }
-          img={ e.strMealThumb }
-          name={ e.strMeal }
-        />))}
+        <div className="recomendation-carousel">
+          {recomendation.map((e, i) => (<Recomendation
+            datatest={ `${i}-recomendation-card` }
+            key={ i }
+            index={ i }
+            img={ e.strMealThumb }
+            name={ e.strMeal }
+          />))}
+        </div>
       </div>)
   );
 }

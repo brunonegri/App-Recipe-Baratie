@@ -55,8 +55,8 @@ function FoodRecipeDetails(props) {
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
-        <h1>{id}</h1>
         <img
+          className="recipe-img"
           data-testid="recipe-photo"
           src={ results[0].strMealThumb }
           alt="DrinkThumb"
@@ -74,22 +74,20 @@ function FoodRecipeDetails(props) {
 
         <iframe
           data-testid="video"
-          width="360"
-          height="300"
+          width="300"
+          height="250"
           src={ results[0].strYoutube.replace('watch?v=', 'embed/') }
           frameBorder="0"
           title="Embedded youtube"
         />
-        {/* <div data-testid="${}-recomendation-card">
-          COLOCAR CARD
-        </div> */}
-        {recomendation.map((e, i) => (<Recomendation
-          datatest={ `${i}-recomendation-card` }
-          key={ i }
-          index={ i }
-          img={ e.strDrinkThumb }
-          name={ e.strDrink }
-        />))}
+        <div className="recomendation-carousel">
+          {recomendation.map((e, i) => (<Recomendation
+            key={ i }
+            index={ i }
+            img={ e.strDrinkThumb }
+            name={ e.strDrink }
+          />))}
+        </div>
 
       </div>)
   );
