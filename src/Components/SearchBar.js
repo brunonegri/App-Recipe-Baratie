@@ -7,7 +7,7 @@ import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 function SearchBar({ results, type, dispatchResults }) {
   const [filterSearch, setFilterSearch] = useState({});
   const [filterResults, setFilterResults] = useState(results);
-  console.log(filterResults);
+  // console.log(filterResults);
 
   const handleSelect = ({ target: { value, name } }) => {
     setFilterSearch((prevState) => ({
