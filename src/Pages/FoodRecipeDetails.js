@@ -2,23 +2,43 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
-import { setResultsAction } from '../redux/Actions/index';
+import { setResultsAction, setIdAction } from '../redux/Actions/index';
 import Recomendation from '../Components/Recomendation';
 
 function FoodRecipeDetails(props) {
-  console.log(props);
-  const { match: { params: { id } }, results, dispatchResults } = props;
-
+  const { match: { params: { id } }, results, dispatchResults, dispatchId } = props;
   const [ingredients, setIngredients] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
+
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  // const [inProgressRecipe, setInProgressRecipe] = useState([]);
+  // test
+
+  // const [started, setStarted] = useState(false);
+  // const [inProgress, setInProgress] = useState(false);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     async function fetchApi() {
       const oi = await fetchRecipeInfos('meal', 'lookup', 'i', id);
       dispatchResults(await oi.meals);
     }
+    dispatchId(id);
+
+    const doneRecipe = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    // const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    // setInProgressRecipe(progressRecipe);
+    setDoneRecipes(doneRecipe);
     fetchApi();
   }, []);
+
+  useEffect(() => {
+    doneRecipes.find((e) => e === id && setDone(true));
+  }, [doneRecipes]);
+
+  // useEffect(() => {
+  //   inProgressRecipe.find((e) => e === id && setStarted(true));
+  // }, [inProgressRecipe]);
 
   useEffect(() => {
     async function fetchApi() {
@@ -50,8 +70,24 @@ function FoodRecipeDetails(props) {
 
     setArrayIngredients();
   }, [results]);
-  console.log(recomendation);
-  console.log(results);
+
+  const handleStartRecipe = () => {
+    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    console.log(progressRecipe);
+    progressRecipe.push(id);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipe));
+    const { history } = props;
+    history.push(`/foods/${id}/in-progress`);
+  };
+
+  // const handleDoneRecipe = () => {
+  //   const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+  //   console.log(progressRecipe);
+  //   progressRecipe.push(id);
+  //   localStorage.setItem('doneRecipes', JSON.stringify(progressRecipe));
+  //   setDoneRecipes(progressRecipe);
+  // };
+
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
@@ -63,23 +99,38 @@ function FoodRecipeDetails(props) {
         />
         <h2 data-testid="recipe-title">{results[0].strMeal}</h2>
         <p data-testid="recipe-category">{results[0].strCategory}</p>
-        {ingredients.map((e, i) => (
-          <li
-            data-testid={ `${i}-ingredient-name-and-measure` }
-            key={ i }
-          >
-            {e}
-          </li>))}
+        <div className="ingredient-container">
+          {ingredients.map((e, i) => (done !== true ? (
+            <li
+              data-testid={ `${i}-ingredient-name-and-measure` }
+              key={ i }
+            >
+              {e}
+            </li>)
+            : (
+              <label key={ i } htmlFor="ingredient">
+                <input
+                  id="ingredient"
+                  type="checkbox"
+                  data-testid={ `${i}-ingredient-step` }
+                  value={ e }
+                />
+                {e}
+              </label>
+            )
+          ))}
+        </div>
         <p data-testid="instructions">{results[0].strInstructions}</p>
 
-        <iframe
+        {results[0].strYoutube ? (<iframe
           data-testid="video"
           width="300"
           height="250"
-          src={ results[0].strYoutube.replace('watch?v=', 'embed/') }
+          src={ results[0]?.strYoutube
+            && results[0].strYoutube.replace('watch?v=', 'embed/') }
           frameBorder="0"
           title="Embedded youtube"
-        />
+        />) : null}
         <div className="recomendation-carousel">
           {recomendation.map((e, i) => (<Recomendation
             key={ i }
@@ -90,19 +141,27 @@ function FoodRecipeDetails(props) {
         </div>
 
         <button
+          onClick={ handleStartRecipe }
           className="start-recipe-btn"
           data-testid="start-recipe-btn"
           type="button"
         >
           Start Recipe
         </button>
-
+        {/* {done === false && (
+          <button
+            className="start-recipe-btn"
+            type="button"
+          >
+            Continue Recipe
+          </button>)} */}
       </div>)
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchResults: (results) => dispatch(setResultsAction(results)),
+  dispatchId: (id) => dispatch(setIdAction(id)),
 });
 
 const mapStateToProps = (state) => ({
@@ -110,9 +169,13 @@ const mapStateToProps = (state) => ({
 });
 
 FoodRecipeDetails.propTypes = {
+  dispatchId: PropTypes.func.isRequired,
   dispatchResults: PropTypes.func.isRequired,
   match: PropTypes.shape(PropTypes.shape(PropTypes.string)).isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodRecipeDetails);
