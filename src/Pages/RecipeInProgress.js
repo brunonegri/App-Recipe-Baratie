@@ -2,44 +2,41 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import fetchRecipeInfos from '../0 - Services/API/requestAPI';
+import setApiType from '../0 - Services/Functions/setApiType';
+import setLocalType from '../0 - Services/Functions/setType';
 import { setResultsAction } from '../redux/Actions/index';
 import setArrayIngredients from '../0 - Services/Functions/setArrayIngredients';
-import initLocalStorage from '../0 - Services/LocalStorage/LocalStorage';
+import { initProgressLocalStorage,
+  getInProgress } from '../0 - Services/LocalStorage/LocalStorage';
 
 function RecipeInProgress(props) {
-  const history = useHistory();
   const { results, dispatchResults } = props;
-  const stringLocation = history.location.pathname;
+  const history = useHistory();
+  const { pathname } = history.location;
+  const type = setLocalType(pathname);
+
   function apenasNumeros(string) {
     const numsStr = string.replace(/[^0-9]/g, '');
     return numsStr;
   }
-  const id = String(apenasNumeros(stringLocation));
+  const id = String(apenasNumeros(pathname));
 
   const [ingredients, setIngredients] = useState([]);
-  const [finishRecipe, setFinishRecipe] = useState(false);
   const [inProgress, setInProgress] = useState([]);
-  const [disable, setDisable] = useState(false);
-  // console.log(inProgress);
-  // const [checkboxCounter, setCheckboxCounter] = useState(0);
 
   useEffect(() => {
     async function fetchApi() {
-      if (history.location.pathname === `/drinks/${id}/in-progress`) {
-        const oi = await fetchRecipeInfos('cocktail', 'lookup', 'i', id);
-        dispatchResults(await oi.drinks);
-      }
-      if (history.location.pathname === `/foods/${id}/in-progress`) {
-        const oi = await fetchRecipeInfos('meal', 'lookup', 'i', id);
-        dispatchResults(await oi.meals);
-      }
+      dispatchResults(await setApiType(pathname, id));
     }
-    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    if (!progressRecipe.meals) {
-      initLocalStorage(null, id);
-    }
-    setInProgress(progressRecipe);
+    const getInProgressLocal = getInProgress();
+    const setLocalStorage = () => {
+      if (!getInProgressLocal[type]) {
+        initProgressLocalStorage(type, id);
+      }
+    };
+    setLocalStorage();
+
+    setInProgress(getInProgressLocal);
     fetchApi();
   }, []);
 
@@ -51,28 +48,16 @@ function RecipeInProgress(props) {
     waitFunc();
   }, [results]);
 
-  useEffect(() => {
-    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    if (!progressRecipe) {
-      inProgress.meals[id].length === ingredients.length
-       && setDisable(true);
-    }
-  });
-
   const handleCheckbox = (event) => {
-    console.log(event);
+    const getInProgressLocal = getInProgress();
     const { target } = event;
-    console.log(target);
     const { value } = target;
-    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    progressRecipe.meals[id].push(value);
-    localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipe));
-    console.log(value);
+    getInProgressLocal[type][id].push(value);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(getInProgressLocal));
   };
 
-  const handleFinishRecipe = () => {
-    setFinishRecipe(!finishRecipe);
-  };
+  console.log(results);
+  console.log(inProgress);
 
   return (
     results.length === 0 ? <h1>Loading</h1> : (
@@ -97,9 +82,7 @@ function RecipeInProgress(props) {
                 id="ingredient"
                 type="checkbox"
                 value={ e }
-                // checked={ inProgress.meals[id] && inProgress.meals[id].some((element) => (
-                //   element === e
-                // )) }
+                checked={ inProgress[type] && inProgress[type][id].includes(e) }
               />
               {e}
             </label>
@@ -107,8 +90,6 @@ function RecipeInProgress(props) {
         </div>
         <p data-testid="instructions">{results[0].strInstructions}</p>
         <button
-          disabled={ disable }
-          onClick={ handleFinishRecipe }
           className="finish-recipe-btn"
           data-testid="finish-recipe-btn"
           type="button"

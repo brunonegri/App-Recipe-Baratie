@@ -2,39 +2,59 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 import { setResultsAction } from '../redux/Actions/index';
 import Recomendation from '../Components/Recomendation';
-import { initProgressLocalStorage } from '../0 - Services/LocalStorage/LocalStorage';
+import { initDoneLocalStorage,
+  initProgressLocalStorage,
+  getInProgress } from '../0 - Services/LocalStorage/LocalStorage';
 import setArrayIngredients from '../0 - Services/Functions/setArrayIngredients';
+import setApiType from '../0 - Services/Functions/setApiType';
+import setLocalType from '../0 - Services/Functions/setType';
+import setRecomendationApi from '../0 - Services/Functions/setRecomendation';
+import {
+  setSrcImage,
+  setSrcImgRecomendation,
+  setTextCategory,
+  setTextRecomendation,
+  setTextTitle } from '../0 - Services/Functions/conditionalRender';
 
-function FoodRecipeDetails(props) {
+function RecipeDetails(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
+  //   23
   const history = useHistory();
   const { pathname } = history.location;
+  const type = setLocalType(pathname);
+
+  function getFoodsOrDrinks(string) {
+    const numsStr = string.split('/');
+    return numsStr[1];
+  }
+  const foodsOrDrinks = String(getFoodsOrDrinks(pathname));
 
   const [ingredients, setIngredients] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
 
   const [inProgress, setInProgress] = useState({});
-  // console.log(inProgress);
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [started, setStarted] = useState(false);
+  console.log(started);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
     async function fetchApi() {
-      const oi = await fetchRecipeInfos('meal', 'lookup', 'i', id);
-      dispatchResults(await oi.meals);
+      dispatchResults(await setApiType(pathname, id));
+      setRecomendation(await setRecomendationApi(type));
     }
-    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    if (!progressRecipe.meals) {
-      initProgressLocalStorage();
-    }
-    const doneRecipe = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    setInProgress(progressRecipe);
-    setDoneRecipes(doneRecipe);
     fetchApi();
+
+    const getInProgressLocal = getInProgress();
+    if (!getInProgressLocal[type]) {
+      initProgressLocalStorage(type, id);
+    }
+
+    const doneRecipe = initDoneLocalStorage();
+    setInProgress(getInProgressLocal);
+    setDoneRecipes(doneRecipe);
   }, []);
 
   useEffect(() => {
@@ -42,52 +62,47 @@ function FoodRecipeDetails(props) {
   }, [doneRecipes]);
 
   useEffect(() => {
-    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    if (!progressRecipe.meals) {
-      const test = Object.keys(inProgress.meals);
+    const getInProgressLocal = getInProgress();
+    if (!getInProgressLocal[type]) {
+      const test = Object.keys(inProgress[type]);
       test.find((e) => e === id && setStarted(true));
     }
   }, [inProgress]);
 
   useEffect(() => {
-    async function fetchApi() {
-      const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');
-      const n1 = 6;
-      setRecomendation(await oi.drinks.slice(0, n1));
-    }
-    fetchApi();
-  }, []);
-
-  useEffect(() => {
     const waitFunc = async () => {
-      const waitFor = await setArrayIngredients(results);
-      setIngredients(await waitFor);
+      setIngredients(await setArrayIngredients(results));
     };
     waitFunc();
   }, [results]);
 
   const handleStartRecipe = () => {
-    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    progressRecipe.meals = { ...progressRecipe.meals, ...{ [id]: [] } };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipe));
-    history.push(`/foods/${id}/in-progress`);
+    const getInProgressLocal = getInProgress();
+    getInProgressLocal[type] = { ...getInProgressLocal[type], ...{ [id]: [] } };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(getInProgressLocal));
+    history.push(`/${foodsOrDrinks}/${id}/in-progress`);
   };
 
   const handleContinueRecipe = () => {
-    history.push(`/foods/${id}/in-progress`);
+    history.push(`/${foodsOrDrinks}/${id}/in-progress`);
   };
-
+  // console.log(results);
+  // console.log(recomendation);
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
         <img
           className="recipe-img"
           data-testid="recipe-photo"
-          src={ results[0].strMealThumb }
-          alt="DrinkThumb"
+          src={ setSrcImage(results[0], type) }
+          alt="Thumb"
         />
-        <h2 data-testid="recipe-title">{results[0].strMeal}</h2>
-        <p data-testid="recipe-category">{results[0].strCategory}</p>
+        <h2 data-testid="recipe-title">{ setTextTitle(results[0], type)}</h2>
+        <button data-testid="share-btn" type="button">Share</button>
+        <button data-testid="favorite-btn" type="button">Favorite</button>
+        <p data-testid="recipe-category">
+          {setTextCategory(results[0], type)}
+        </p>
         <div className="ingredient-container">
           {ingredients && ingredients.map((e, i) => (
             <li
@@ -109,12 +124,13 @@ function FoodRecipeDetails(props) {
           title="Embedded youtube"
         />) : null}
         <div className="recomendation-carousel">
-          {recomendation.map((e, i) => (<Recomendation
-            key={ i }
-            index={ i }
-            img={ e.strDrinkThumb }
-            name={ e.strDrink }
-          />))}
+          {recomendation.map((e, i) => (
+            <Recomendation
+              key={ i }
+              index={ i }
+              img={ setSrcImgRecomendation(e, type) }
+              name={ setTextRecomendation(e, type) }
+            />))}
         </div>
         {done === false && started === false ? (
           <button
@@ -144,13 +160,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   results: state.page.setResults,
-  setId: state.page.setId,
 });
 
-FoodRecipeDetails.propTypes = {
+RecipeDetails.propTypes = {
   dispatchResults: PropTypes.func.isRequired,
   match: PropTypes.shape(PropTypes.shape(PropTypes.string)).isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodRecipeDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetails);
