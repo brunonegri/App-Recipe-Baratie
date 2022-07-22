@@ -24,15 +24,17 @@ function SearchBar({ results, type, dispatchResults }) {
 
   const ingredientSearch = async (search) => {
     const oi = await fetchRecipeInfos(type, 'filter', 'i', search);
-    if (oi.meals === null || oi.drinks === null) {
+    // ? verifica se esta vazio.
+    if (!(oi?.meals || oi?.drinks)) {
+      console.log(oi);
       global.alert(errorNull);
     }
-    setFilterResults(await oi.drinks || oi.meals);
+    setFilterResults(oi.drinks || oi.meals);
   };
 
   const nameSearch = async (search) => {
     const oi = await fetchRecipeInfos(type, 'search', 's', search);
-    if (oi.meals === null || oi.drinks === null) {
+    if (!(oi?.meals || oi?.drinks)) {
       global.alert(errorNull);
     }
     console.log(oi);
@@ -44,7 +46,7 @@ function SearchBar({ results, type, dispatchResults }) {
       global.alert('Your search must have only 1 (one) character');
     }
     const oi = await fetchRecipeInfos(type, 'search', 'f', search);
-    if (oi.meals === null || oi.drinks === null) {
+    if (!(oi?.meals || oi?.drinks)) {
       global.alert(errorNull);
     }
     setFilterResults(oi.drinks || oi.meals);
