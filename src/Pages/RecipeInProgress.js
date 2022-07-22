@@ -1,47 +1,63 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import fetchRecipeInfos from '../0 - Services/API/requestAPI';
+import setApiType from '../0 - Services/Functions/setApiType';
+import setLocalType from '../0 - Services/Functions/setType';
 import { setResultsAction } from '../redux/Actions/index';
+import setArrayIngredients from '../0 - Services/Functions/setArrayIngredients';
+import { initProgressLocalStorage,
+  getInProgress } from '../0 - Services/LocalStorage/LocalStorage';
 
 function RecipeInProgress(props) {
-  console.log(props);
-  const { match: { params: { id } }, results, dispatchResults } = props;
+  const { results, dispatchResults } = props;
+  const history = useHistory();
+  const { pathname } = history.location;
+  const type = setLocalType(pathname);
+
+  function apenasNumeros(string) {
+    const numsStr = string.replace(/[^0-9]/g, '');
+    return numsStr;
+  }
+  const id = String(apenasNumeros(pathname));
+
   const [ingredients, setIngredients] = useState([]);
-  const [finishRecipe, setFinishRecipe] = useState(false);
+  const [inProgress, setInProgress] = useState([]);
 
   useEffect(() => {
     async function fetchApi() {
-      const oi = await fetchRecipeInfos('cocktail', 'lookup', 'i', id);
-      dispatchResults(await oi.drinks);
+      dispatchResults(await setApiType(pathname, id));
     }
+    const getInProgressLocal = getInProgress();
+    const setLocalStorage = () => {
+      if (!getInProgressLocal[type]) {
+        initProgressLocalStorage(type, id);
+      }
+    };
+    setLocalStorage();
+
+    setInProgress(getInProgressLocal);
     fetchApi();
   }, []);
 
   useEffect(() => {
-    const setArrayIngredients = async () => {
-      const n1 = 17;
-      const n2 = 31;
-      const n3 = 32;
-      const n4 = 46;
-      if (results.length !== 0) {
-        const arrayIngredients = await Object.values(results[0]).slice(n1, n2);
-        const filterIngredients = arrayIngredients.filter((e) => e !== '' && e !== null);
-        const arrayMedidas = await Object.values(results[0]).slice(n3, n4);
-        const filterMedidas = arrayMedidas.filter((e) => e !== '' && e !== null);
-        const arrayNovo = [];
-        filterIngredients.forEach((e, i) => {
-          arrayNovo.push(`${filterMedidas[i]} - ${e}`);
-        });
-        setIngredients(arrayNovo);
-      }
+    const waitFunc = async () => {
+      const waitFor = await setArrayIngredients(results);
+      setIngredients(await waitFor);
     };
-    setArrayIngredients();
+    waitFunc();
   }, [results]);
 
-  const handleFinishRecipe = () => {
-    setFinishRecipe(!finishRecipe);
+  const handleCheckbox = (event) => {
+    const getInProgressLocal = getInProgress();
+    const { target } = event;
+    const { value } = target;
+    getInProgressLocal[type][id].push(value);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(getInProgressLocal));
   };
+
+  console.log(results);
+  console.log(inProgress);
 
   return (
     results.length === 0 ? <h1>Loading</h1> : (
@@ -59,13 +75,14 @@ function RecipeInProgress(props) {
           {results[0].strAlcoholic || results[0].strCategory}
         </p>
         <div className="ingredient-container">
-          {ingredients.map((e, i) => (
-            <label key={ i } htmlFor="ingredient">
+          {ingredients && ingredients.map((e, i) => (
+            <label key={ i } htmlFor="ingredient" data-testid={ `${i}-ingredient-step` }>
               <input
+                onClick={ handleCheckbox }
                 id="ingredient"
                 type="checkbox"
-                data-testid={ `${i}-ingredient-step` }
                 value={ e }
+                checked={ inProgress[type] && inProgress[type][id].includes(e) }
               />
               {e}
             </label>
@@ -73,12 +90,11 @@ function RecipeInProgress(props) {
         </div>
         <p data-testid="instructions">{results[0].strInstructions}</p>
         <button
-          onClick={ handleFinishRecipe }
           className="finish-recipe-btn"
           data-testid="finish-recipe-btn"
           type="button"
         >
-          Start Recipe
+          Finish Recipe
         </button>
       </div>)
   );
@@ -90,11 +106,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   results: state.page.setResults,
+  id: state.page.setId,
 });
 
 RecipeInProgress.propTypes = {
   dispatchResults: PropTypes.func.isRequired,
-  match: PropTypes.shape(PropTypes.shape(PropTypes.string)).isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 

@@ -4,7 +4,7 @@ const initialState = {
   setApi: '',
   setPage: '',
   setResults: [],
-  setId: 0,
+  setId: '',
 };
 
 const page = (state = initialState, action) => {
