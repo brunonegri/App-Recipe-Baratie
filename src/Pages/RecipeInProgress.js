@@ -8,6 +8,7 @@ import { setResultsAction } from '../redux/Actions/index';
 import setArrayIngredients from '../0 - Services/Functions/setArrayIngredients';
 import { initProgressLocalStorage,
   getInProgress } from '../0 - Services/LocalStorage/LocalStorage';
+import ShareButton from '../Components/ShareButton';  
 
 function RecipeInProgress(props) {
   const { results, dispatchResults } = props;
@@ -69,7 +70,9 @@ function RecipeInProgress(props) {
           alt="DrinkThumb"
         />
         <h2 data-testid="recipe-title">{results[0].strDrink || results[0].strMeal}</h2>
-        <button data-testid="share-btn" type="button">Share</button>
+        <ShareButton 
+        link={`http://localhost:3000${pathname.replace("/in-progress", "")}`}
+        />
         <button data-testid="favorite-btn" type="button">Favorite</button>
         <p data-testid="recipe-category">
           {results[0].strAlcoholic || results[0].strCategory}

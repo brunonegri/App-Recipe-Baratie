@@ -14,15 +14,12 @@ function CategoriesButtons({ dispatchResults }) {
     if (history.location.pathname === '/drinks') {
       const requestCategories = await fetchRecipeInfos('cocktail', 'list', 'c', 'list');
       setCategories(requestCategories.drinks);
-      console.log(categories);
     }
     if (history.location.pathname === '/foods') {
       const requestCategories = await fetchRecipeInfos('meal', 'list', 'c', 'list');
       setCategories(requestCategories.meals);
-      console.log(categories);
     }
   };
-  // Merge
   const defaultFetch = async () => {
     if (history.location.pathname === '/drinks') {
       const oi = await fetchRecipeInfos('cocktail', 'search', 's', '');

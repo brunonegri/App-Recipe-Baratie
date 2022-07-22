@@ -23,7 +23,6 @@ const setArrayIngredients = async (results) => {
     });
     return measureAndIngredient;
   }
-  // console.log(results[0]);
 };
 
 export default setArrayIngredients;

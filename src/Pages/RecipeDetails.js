@@ -17,6 +17,7 @@ import {
   setTextCategory,
   setTextRecomendation,
   setTextTitle } from '../0 - Services/Functions/conditionalRender';
+import ShareButton from '../Components/ShareButton';
 
 function RecipeDetails(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
@@ -82,8 +83,6 @@ function RecipeDetails(props) {
   const handleContinueRecipe = () => {
     history.push(`/${foodsOrDrinks}/${id}/in-progress`);
   };
-  // console.log(results);
-  // console.log(recomendation);
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
@@ -94,7 +93,9 @@ function RecipeDetails(props) {
           alt="Thumb"
         />
         <h2 data-testid="recipe-title">{ setTextTitle(results[0], typeForApi)}</h2>
-        <button data-testid="share-btn" type="button">Share</button>
+        <ShareButton
+          link={ `http://localhost:3000${pathname}` }
+        />
         <button data-testid="favorite-btn" type="button">Favorite</button>
         <p data-testid="recipe-category">
           {setTextCategory(results[0], typeForApi)}
