@@ -7,7 +7,6 @@ import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 function SearchBar({ results, type, dispatchResults }) {
   const [filterSearch, setFilterSearch] = useState({});
   const [filterResults, setFilterResults] = useState(results);
-  // console.log(filterResults);
 
   const handleSelect = ({ target: { value, name } }) => {
     setFilterSearch((prevState) => ({
@@ -26,7 +25,6 @@ function SearchBar({ results, type, dispatchResults }) {
     const oi = await fetchRecipeInfos(type, 'filter', 'i', search);
     // ? verifica se esta vazio.
     if (!(oi?.meals || oi?.drinks)) {
-      console.log(oi);
       global.alert(errorNull);
     }
     setFilterResults(oi.drinks || oi.meals);
@@ -37,7 +35,6 @@ function SearchBar({ results, type, dispatchResults }) {
     if (!(oi?.meals || oi?.drinks)) {
       global.alert(errorNull);
     }
-    console.log(oi);
     setFilterResults(oi.drinks || oi.meals);
   };
 
