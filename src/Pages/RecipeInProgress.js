@@ -7,7 +7,8 @@ import setLocalType from '../0 - Services/Functions/setType';
 import { setResultsAction } from '../redux/Actions/index';
 import setArrayIngredients from '../0 - Services/Functions/setArrayIngredients';
 import { initProgressLocalStorage,
-  getInProgress } from '../0 - Services/LocalStorage/LocalStorage';
+  getInProgress,
+  remIngridientLocalStorage } from '../0 - Services/LocalStorage/LocalStorage';
 import ShareButton from '../Components/ShareButton';
 import FavoriteButton from '../Components/FavoriteButton';
 
@@ -24,6 +25,8 @@ function RecipeInProgress(props) {
   const id = String(apenasNumeros(pathname));
 
   const [ingredients, setIngredients] = useState([]);
+  const [checked, setChecked] = useState({});
+  console.log(checked);
 
   useEffect(() => {
     async function fetchApi() {
@@ -47,18 +50,33 @@ function RecipeInProgress(props) {
       setIngredients(await waitFor);
     };
     waitFunc();
+    ingredients?.map((e) => checked[e] = false);
   }, [results]);
 
-  const handleCheckbox = (event) => {
-    const getInProgressLocal = getInProgress();
-    const { target } = event;
-    const { value } = target;
+  const getInProgressLocal = getInProgress();
+
+  const handleCheckbox = ({ target: { value } }) => {
+    console.log(value);
+    // remIngridientLocalStorage(typeForLocal, id, value);
+
+    // if (getInProgressLocal && getInProgressLocal[typeForLocal][id].includes(value)) {
+    //   remIngridientLocalStorage(typeForLocal, id, value);
+    //   setChecked(checked[value] = true);
+    // }
     getInProgressLocal[typeForLocal][id].push(value);
     localStorage.setItem('inProgressRecipes', JSON.stringify(getInProgressLocal));
   };
+  // fav func
+  // const handleClick = () => {
+  //   if (favorite) {
+  //     remFavLocalStorage(id);
+  //   } else {
+  //     addFavLocalStorage(type, results[0]);
+  //   }
+  //   setFavorite(!favorite);
+  // };
 
   console.log(results);
-  const getInProgressLocal = getInProgress();
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
@@ -72,7 +90,7 @@ function RecipeInProgress(props) {
         <ShareButton
           link={ `http://localhost:3000${pathname.replace('/in-progress', '')}` }
         />
-        <FavoriteButton />
+        <FavoriteButton id={ id } results={ results } type={ typeForLocal } />
         <p data-testid="recipe-category">
           {results[0].strAlcoholic || results[0].strCategory}
         </p>
@@ -84,8 +102,7 @@ function RecipeInProgress(props) {
                 id="ingredient"
                 type="checkbox"
                 value={ e }
-                checked={ getInProgressLocal[typeForLocal]
-                   && getInProgressLocal[typeForLocal][id].includes(e) }
+                // checked={ check(e) }
               />
               {e}
             </label>
