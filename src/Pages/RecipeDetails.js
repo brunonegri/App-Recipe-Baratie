@@ -17,6 +17,7 @@ import {
   setTextCategory,
   setTextRecomendation,
   setTextTitle } from '../0 - Services/Functions/conditionalRender';
+import ShareButton from '../Components/ShareButton';
 
 function RecipeDetails(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
@@ -98,7 +99,7 @@ function RecipeDetails(props) {
           alt="Thumb"
         />
         <h2 data-testid="recipe-title">{ setTextTitle(results[0], type)}</h2>
-        <button data-testid="share-btn" type="button">Share</button>
+        <ShareButton />
         <button data-testid="favorite-btn" type="button">Favorite</button>
         <p data-testid="recipe-category">
           {setTextCategory(results[0], type)}
