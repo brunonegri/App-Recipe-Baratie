@@ -1,64 +1,47 @@
 const initProgressLocalStorage = (type, id) => {
-  if (type === 'meal') {
+  if (type === 'meals') {
     const inProgress = {
-      cocktail: { },
-      meal: { },
+      cocktails: { },
+      meals: { },
     };
-    inProgress.meal = { ...inProgress.meal, ...{ [id]: [] } };
+    inProgress.meals = { ...inProgress.meals, ...{ [id]: [] } };
     return localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
-  } if (type === 'cocktail') {
+  } if (type === 'cocktails') {
     const inProgress = {
-      cocktail: { },
-      meal: { },
+      cocktails: { },
+      meals: { },
     };
-    inProgress.cocktail = { ...inProgress.cocktail, ...{ [id]: [] } };
+    inProgress.cocktails = { ...inProgress.cocktails, ...{ [id]: [] } };
     return localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
   } if (type === undefined) {
     const inProgress = {
-      cocktail: { },
-      meal: { },
+      cocktails: { },
+      meals: { },
     };
     return localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
   }
 };
 
-const initFavLocalStorage = (type, results) => {
-  if (type === 'meal') {
-    const inProgress = [{
-      id: '',
-      type: '',
-      nationality: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-    }];
-    inProgress.meal = { ...inProgress.meal, ...{ [results]: [] } };
-    return localStorage.setItem('favoriteRecipes', JSON.stringify(inProgress));
-  } if (type === 'cocktail') {
-    const inProgress = [{
-      id: '',
-      type: '',
-      nationality: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-    }];
-    inProgress.cocktail = { ...inProgress.cocktail, ...{ [results]: [] } };
-    return localStorage.setItem('favoriteRecipes', JSON.stringify(inProgress));
-  } if (type === undefined) {
-    const inProgress = [{
-      id: '',
-      type: '',
-      nationality: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-    }];
-    return localStorage.setItem('favoriteRecipes', JSON.stringify(inProgress));
-  }
+const addFavLocalStorage = (type, results) => {
+  const favRecipe = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+  const objFav = {
+    id: `${results.idMeal}` || `${results.idDrink}`,
+    type: `${type}`,
+    nationality: `${results.strArea}`,
+    category: `${results.strCategory}`,
+    alcoholicOrNot: `${results.strAlcoholic}` || '',
+    name: `${results.strMeal || results.strDrink}`,
+    image: `${results.strMealThumb || results.strDrinkThumb}`,
+  };
+  favRecipe.push(objFav);
+  return localStorage.setItem('favoriteRecipes', JSON.stringify(favRecipe));
+};
+
+const remFavLocalStorage = (id) => {
+  const favRecipe = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+  const filter1 = favRecipe.filter((e) => e.id !== id);
+  console.log(filter1);
+  return localStorage.setItem('favoriteRecipes', JSON.stringify(filter1));
 };
 
 const initDoneLocalStorage = () => {
@@ -72,4 +55,4 @@ const getInProgress = () => {
 };
 
 export { initProgressLocalStorage,
-  initDoneLocalStorage, getInProgress, initFavLocalStorage };
+  initDoneLocalStorage, getInProgress, addFavLocalStorage, remFavLocalStorage };

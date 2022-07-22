@@ -8,13 +8,14 @@ import { setResultsAction } from '../redux/Actions/index';
 import setArrayIngredients from '../0 - Services/Functions/setArrayIngredients';
 import { initProgressLocalStorage,
   getInProgress } from '../0 - Services/LocalStorage/LocalStorage';
-import ShareButton from '../Components/ShareButton';  
+import ShareButton from '../Components/ShareButton';
+import FavoriteButton from '../Components/FavoriteButton';
 
 function RecipeInProgress(props) {
   const { results, dispatchResults } = props;
   const history = useHistory();
   const { pathname } = history.location;
-  const type = setLocalType(pathname);
+  const typeForLocal = `${setLocalType(pathname)}s`;
 
   function apenasNumeros(string) {
     const numsStr = string.replace(/[^0-9]/g, '');
@@ -23,22 +24,21 @@ function RecipeInProgress(props) {
   const id = String(apenasNumeros(pathname));
 
   const [ingredients, setIngredients] = useState([]);
-  const [inProgress, setInProgress] = useState([]);
 
   useEffect(() => {
     async function fetchApi() {
       dispatchResults(await setApiType(pathname, id));
     }
-    const getInProgressLocal = getInProgress();
-    const setLocalStorage = () => {
-      if (!getInProgressLocal[type]) {
-        initProgressLocalStorage(type, id);
+    fetchApi();
+
+    const defaultLocalStorage = () => {
+      const getInProgressLocal = getInProgress();
+      console.log(getInProgressLocal);
+      if (!getInProgressLocal[typeForLocal]) {
+        initProgressLocalStorage(typeForLocal, id);
       }
     };
-    setLocalStorage();
-
-    setInProgress(getInProgressLocal);
-    fetchApi();
+    defaultLocalStorage();
   }, []);
 
   useEffect(() => {
@@ -53,13 +53,12 @@ function RecipeInProgress(props) {
     const getInProgressLocal = getInProgress();
     const { target } = event;
     const { value } = target;
-    getInProgressLocal[type][id].push(value);
+    getInProgressLocal[typeForLocal][id].push(value);
     localStorage.setItem('inProgressRecipes', JSON.stringify(getInProgressLocal));
   };
 
   console.log(results);
-  console.log(inProgress);
-
+  const getInProgressLocal = getInProgress();
   return (
     results.length === 0 ? <h1>Loading</h1> : (
       <div>
@@ -70,10 +69,10 @@ function RecipeInProgress(props) {
           alt="DrinkThumb"
         />
         <h2 data-testid="recipe-title">{results[0].strDrink || results[0].strMeal}</h2>
-        <ShareButton 
-        link={`http://localhost:3000${pathname.replace("/in-progress", "")}`}
+        <ShareButton
+          link={ `http://localhost:3000${pathname.replace('/in-progress', '')}` }
         />
-        <button data-testid="favorite-btn" type="button">Favorite</button>
+        <FavoriteButton />
         <p data-testid="recipe-category">
           {results[0].strAlcoholic || results[0].strCategory}
         </p>
@@ -85,7 +84,8 @@ function RecipeInProgress(props) {
                 id="ingredient"
                 type="checkbox"
                 value={ e }
-                checked={ inProgress[type] && inProgress[type][id].includes(e) }
+                checked={ getInProgressLocal[typeForLocal]
+                   && getInProgressLocal[typeForLocal][id].includes(e) }
               />
               {e}
             </label>

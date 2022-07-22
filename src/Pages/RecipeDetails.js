@@ -18,6 +18,7 @@ import {
   setTextRecomendation,
   setTextTitle } from '../0 - Services/Functions/conditionalRender';
 import ShareButton from '../Components/ShareButton';
+import FavoriteButton from '../Components/FavoriteButton';
 
 function RecipeDetails(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
@@ -25,9 +26,7 @@ function RecipeDetails(props) {
   const history = useHistory();
   const { pathname } = history.location;
   const typeForApi = setLocalType(pathname);
-  console.log(typeForApi);
   const typeForLocal = `${setLocalType(pathname)}s`;
-  console.log(typeForLocal);
 
   function getFoodsOrDrinks(string) {
     const numsStr = string.split('/');
@@ -39,7 +38,6 @@ function RecipeDetails(props) {
   const [recomendation, setRecomendation] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [started, setStarted] = useState(false);
-  console.log(started);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
@@ -96,7 +94,7 @@ function RecipeDetails(props) {
         <ShareButton
           link={ `http://localhost:3000${pathname}` }
         />
-        <button data-testid="favorite-btn" type="button">Favorite</button>
+        <FavoriteButton id={ id } results={ results } type={ typeForLocal } />
         <p data-testid="recipe-category">
           {setTextCategory(results[0], typeForApi)}
         </p>
