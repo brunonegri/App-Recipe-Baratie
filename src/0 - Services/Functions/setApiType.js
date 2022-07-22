@@ -9,7 +9,6 @@ async function setApiType(pathname, id) {
   if (pathname.includes('foods')) {
     const response = await fetchRecipeInfos('meal', 'lookup', 'i', id);
     const data = await response;
-    console.log(data);
     return data.meals;
   }
 }
