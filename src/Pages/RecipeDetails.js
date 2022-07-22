@@ -23,7 +23,10 @@ function RecipeDetails(props) {
   //   23
   const history = useHistory();
   const { pathname } = history.location;
-  const type = setLocalType(pathname);
+  const typeForApi = setLocalType(pathname);
+  console.log(typeForApi);
+  const typeForLocal = `${setLocalType(pathname)}s`;
+  console.log(typeForLocal);
 
   function getFoodsOrDrinks(string) {
     const numsStr = string.split('/');
@@ -33,8 +36,6 @@ function RecipeDetails(props) {
 
   const [ingredients, setIngredients] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
-
-  const [inProgress, setInProgress] = useState({});
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [started, setStarted] = useState(false);
   console.log(started);
@@ -43,31 +44,25 @@ function RecipeDetails(props) {
   useEffect(() => {
     async function fetchApi() {
       dispatchResults(await setApiType(pathname, id));
-      setRecomendation(await setRecomendationApi(type));
+      setRecomendation(await setRecomendationApi(typeForApi));
     }
     fetchApi();
 
     const getInProgressLocal = getInProgress();
-    if (!getInProgressLocal[type]) {
-      initProgressLocalStorage(type, id);
+    if (!getInProgressLocal[typeForLocal]) {
+      initProgressLocalStorage();
+    } else {
+      const test = Object.keys(getInProgressLocal[typeForLocal]);
+      test.find((e) => e === id && setStarted(true));
     }
 
     const doneRecipe = initDoneLocalStorage();
-    setInProgress(getInProgressLocal);
     setDoneRecipes(doneRecipe);
   }, []);
 
   useEffect(() => {
     doneRecipes.find((e) => e === id && setDone(true));
   }, [doneRecipes]);
-
-  useEffect(() => {
-    const getInProgressLocal = getInProgress();
-    if (!getInProgressLocal[type]) {
-      const test = Object.keys(inProgress[type]);
-      test.find((e) => e === id && setStarted(true));
-    }
-  }, [inProgress]);
 
   useEffect(() => {
     const waitFunc = async () => {
@@ -78,7 +73,8 @@ function RecipeDetails(props) {
 
   const handleStartRecipe = () => {
     const getInProgressLocal = getInProgress();
-    getInProgressLocal[type] = { ...getInProgressLocal[type], ...{ [id]: [] } };
+    getInProgressLocal[typeForLocal] = {
+      ...getInProgressLocal[typeForLocal], ...{ [id]: [] } };
     localStorage.setItem('inProgressRecipes', JSON.stringify(getInProgressLocal));
     history.push(`/${foodsOrDrinks}/${id}/in-progress`);
   };
@@ -94,14 +90,14 @@ function RecipeDetails(props) {
         <img
           className="recipe-img"
           data-testid="recipe-photo"
-          src={ setSrcImage(results[0], type) }
+          src={ setSrcImage(results[0], typeForApi) }
           alt="Thumb"
         />
-        <h2 data-testid="recipe-title">{ setTextTitle(results[0], type)}</h2>
+        <h2 data-testid="recipe-title">{ setTextTitle(results[0], typeForApi)}</h2>
         <button data-testid="share-btn" type="button">Share</button>
         <button data-testid="favorite-btn" type="button">Favorite</button>
         <p data-testid="recipe-category">
-          {setTextCategory(results[0], type)}
+          {setTextCategory(results[0], typeForApi)}
         </p>
         <div className="ingredient-container">
           {ingredients && ingredients.map((e, i) => (
@@ -128,8 +124,8 @@ function RecipeDetails(props) {
             <Recomendation
               key={ i }
               index={ i }
-              img={ setSrcImgRecomendation(e, type) }
-              name={ setTextRecomendation(e, type) }
+              img={ setSrcImgRecomendation(e, typeForApi) }
+              name={ setTextRecomendation(e, typeForApi) }
             />))}
         </div>
         {done === false && started === false ? (

@@ -13,6 +13,12 @@ const initProgressLocalStorage = (type, id) => {
     };
     inProgress.cocktail = { ...inProgress.cocktail, ...{ [id]: [] } };
     return localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
+  } if (type === undefined) {
+    const inProgress = {
+      cocktail: { },
+      meal: { },
+    };
+    return localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
   }
 };
 
