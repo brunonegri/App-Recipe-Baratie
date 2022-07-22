@@ -97,8 +97,8 @@ function RecipeDetails(props) {
           alt="Thumb"
         />
         <h2 data-testid="recipe-title">{ setTextTitle(results[0], type)}</h2>
-        <ShareButton 
-        link={`http://localhost:3000${pathname}`}
+        <ShareButton
+          link={ `http://localhost:3000${pathname}` }
         />
         <button data-testid="favorite-btn" type="button">Favorite</button>
         <p data-testid="recipe-category">

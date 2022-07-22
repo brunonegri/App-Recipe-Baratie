@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useEffect } from 'react';
 import Header from '../Components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -9,6 +9,13 @@ function FavoriteRecipes() {
     const getFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     setFavoriteRecipes(getFavorite);
   }, []);
+  // criar função de filtro usando setFavoriteRecipes...
+  /* const filterFavoriteRecipes = (e) => {
+    const filteredRecipes = favoriteRecipes.filter((e) => {
+
+    });
+    setFavoriteRecipes(filteredRecipes);
+  }; */
 
   return (
     <div>
@@ -34,26 +41,26 @@ function FavoriteRecipes() {
       >
         Drink
       </button>
-      {favoriteRecipes && favoriteRecipes.map((favoriteRecipe, index) => (
+      {favoriteRecipes && favoriteRecipes.map((element, index) => (
         <div key={ index }>
           <img
-            src={ favoriteRecipe.image }
+            src={ element.image }
             alt="foodImage"
             data-testid={ `${index}-horizontal-image` } // imagem do card de receita
           />
           <p
             data-testid={ `${index}-horizontal-top-text` } // texto da categoria
           >
-            {favoriteRecipe.category}
+            {element.category}
           </p>
           <p
             data-testid={ `${index}-horizontal-name` } // texto do nome da receita
           >
-            {favoriteRecipe.name}
+            {element.name}
           </p>
           <p data-testid={ `${index}-horizontal-done-date` }>
 
-            {favoriteRecipe.doneDate}
+            {element.doneDate}
 
           </p>
           <button
@@ -65,7 +72,7 @@ function FavoriteRecipes() {
             <img src={ imageShare } alt="sla" />
           </button>
           <div key={ index }>
-            <p data-testid={ `${index}-${favoriteRecipe.tag}-horizontal-tag` } />
+            <p data-testid={ `${index}-${element.tag}-horizontal-tag` } />
           </div>
         </div>
       ))}
