@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
-import { setResultsAction, setIdAction } from '../redux/Actions/index';
+import { setResultsAction } from '../redux/Actions/index';
 import Recomendation from '../Components/Recomendation';
+import initLocalStorage from '../0 - Services/LocalStorage/LocalStorage';
+import setArrayIngredients from '../0 - Services/Functions/setArrayIngredients';
 
 function FoodRecipeDetails(props) {
-  const { match: { params: { id } }, results, dispatchResults, dispatchId } = props;
+  const { match: { params: { id } }, results, dispatchResults } = props;
+  const history = useHistory();
+  const { pathname } = history.location;
+
   const [ingredients, setIngredients] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
 
+  const [inProgress, setInProgress] = useState({});
+  // console.log(inProgress);
   const [doneRecipes, setDoneRecipes] = useState([]);
-  // const [inProgressRecipe, setInProgressRecipe] = useState([]);
-  // test
-
-  // const [started, setStarted] = useState(false);
-  // const [inProgress, setInProgress] = useState(false);
+  const [started, setStarted] = useState(false);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
@@ -23,11 +27,12 @@ function FoodRecipeDetails(props) {
       const oi = await fetchRecipeInfos('meal', 'lookup', 'i', id);
       dispatchResults(await oi.meals);
     }
-    dispatchId(id);
-
+    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    if (!progressRecipe.meals) {
+      initLocalStorage();
+    }
     const doneRecipe = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    // const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    // setInProgressRecipe(progressRecipe);
+    setInProgress(progressRecipe);
     setDoneRecipes(doneRecipe);
     fetchApi();
   }, []);
@@ -36,9 +41,13 @@ function FoodRecipeDetails(props) {
     doneRecipes.find((e) => e === id && setDone(true));
   }, [doneRecipes]);
 
-  // useEffect(() => {
-  //   inProgressRecipe.find((e) => e === id && setStarted(true));
-  // }, [inProgressRecipe]);
+  useEffect(() => {
+    const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    if (!progressRecipe.meals) {
+      const test = Object.keys(inProgress.meals);
+      test.find((e) => e === id && setStarted(true));
+    }
+  }, [inProgress]);
 
   useEffect(() => {
     async function fetchApi() {
@@ -50,43 +59,23 @@ function FoodRecipeDetails(props) {
   }, []);
 
   useEffect(() => {
-    const setArrayIngredients = async () => {
-      const n1 = 9;
-      const n2 = 28;
-      const n3 = 29;
-      const n4 = 48;
-      if (results.length !== 0) {
-        const arrayIngredients = await Object.values(results[0]).slice(n1, n2);
-        const filterIngredients = arrayIngredients.filter((e) => e !== '' && e !== null);
-        const arrayMedidas = await Object.values(results[0]).slice(n3, n4);
-        const filterMedidas = arrayMedidas.filter((e) => e !== '' && e !== null);
-        const arrayNovo = [];
-        filterIngredients.forEach((e, i) => {
-          arrayNovo.push(`${filterMedidas[i]} - ${e}`);
-        });
-        setIngredients(arrayNovo);
-      }
+    const waitFunc = async () => {
+      const waitFor = await setArrayIngredients(results);
+      setIngredients(await waitFor);
     };
-
-    setArrayIngredients();
+    waitFunc();
   }, [results]);
 
   const handleStartRecipe = () => {
     const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    console.log(progressRecipe);
-    progressRecipe.push(id);
+    progressRecipe.meals = { ...progressRecipe.meals, ...{ [id]: [] } };
     localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipe));
-    const { history } = props;
     history.push(`/foods/${id}/in-progress`);
   };
 
-  // const handleDoneRecipe = () => {
-  //   const progressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-  //   console.log(progressRecipe);
-  //   progressRecipe.push(id);
-  //   localStorage.setItem('doneRecipes', JSON.stringify(progressRecipe));
-  //   setDoneRecipes(progressRecipe);
-  // };
+  const handleContinueRecipe = () => {
+    history.push(`/foods/${id}/in-progress`);
+  };
 
   return (
     results.length === 0 ? <h1>Loading</h1> : (
@@ -100,25 +89,13 @@ function FoodRecipeDetails(props) {
         <h2 data-testid="recipe-title">{results[0].strMeal}</h2>
         <p data-testid="recipe-category">{results[0].strCategory}</p>
         <div className="ingredient-container">
-          {ingredients.map((e, i) => (done !== true ? (
+          {ingredients && ingredients.map((e, i) => (
             <li
               data-testid={ `${i}-ingredient-name-and-measure` }
               key={ i }
             >
               {e}
-            </li>)
-            : (
-              <label key={ i } htmlFor="ingredient">
-                <input
-                  id="ingredient"
-                  type="checkbox"
-                  data-testid={ `${i}-ingredient-step` }
-                  value={ e }
-                />
-                {e}
-              </label>
-            )
-          ))}
+            </li>))}
         </div>
         <p data-testid="instructions">{results[0].strInstructions}</p>
 
@@ -139,43 +116,41 @@ function FoodRecipeDetails(props) {
             name={ e.strDrink }
           />))}
         </div>
-
-        <button
-          onClick={ handleStartRecipe }
-          className="start-recipe-btn"
-          data-testid="start-recipe-btn"
-          type="button"
-        >
-          Start Recipe
-        </button>
-        {/* {done === false && (
+        {done === false && started === false ? (
           <button
+            onClick={ handleStartRecipe }
             className="start-recipe-btn"
+            data-testid="start-recipe-btn"
+            type="button"
+          >
+            Start Recipe
+          </button>
+        ) : (
+          <button
+            onClick={ handleContinueRecipe }
+            className="start-recipe-btn"
+            data-testid="start-recipe-btn"
             type="button"
           >
             Continue Recipe
-          </button>)} */}
+          </button>)}
       </div>)
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchResults: (results) => dispatch(setResultsAction(results)),
-  dispatchId: (id) => dispatch(setIdAction(id)),
 });
 
 const mapStateToProps = (state) => ({
   results: state.page.setResults,
+  setId: state.page.setId,
 });
 
 FoodRecipeDetails.propTypes = {
-  dispatchId: PropTypes.func.isRequired,
   dispatchResults: PropTypes.func.isRequired,
   match: PropTypes.shape(PropTypes.shape(PropTypes.string)).isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodRecipeDetails);

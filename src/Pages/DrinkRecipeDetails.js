@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
 import { setResultsAction } from '../redux/Actions/index';
 import Recomendation from '../Components/Recomendation';
+import setArrayIngredients from '../0 - Services/Functions/setArrayIngredients';
 
 function DrinkRecipeDetails(props) {
   const { match: { params: { id } }, results, dispatchResults } = props;
@@ -36,25 +37,11 @@ function DrinkRecipeDetails(props) {
   }, []);
 
   useEffect(() => {
-    const setArrayIngredients = async () => {
-      const n1 = 17;
-      const n2 = 31;
-      const n3 = 32;
-      const n4 = 46;
-      if (results.length !== 0) {
-        const arrayIngredients = await Object.values(results[0]).slice(n1, n2);
-        const filterIngredients = arrayIngredients.filter((e) => e !== '' && e !== null);
-        const arrayMedidas = await Object.values(results[0]).slice(n3, n4);
-        const filterMedidas = arrayMedidas.filter((e) => e !== '' && e !== null);
-        const arrayNovo = [];
-        filterIngredients.forEach((e, i) => {
-          arrayNovo.push(`${filterMedidas[i]} - ${e}`);
-        });
-        setIngredients(arrayNovo);
-        console.log(Object.values(results[0]));
-      }
+    const waitFunc = async () => {
+      const waitFor = await setArrayIngredients(results);
+      setIngredients(waitFor);
     };
-    setArrayIngredients();
+    waitFunc();
   }, [results]);
 
   const handleStartRecipe = () => {
