@@ -10,7 +10,6 @@ function FavoriteButton({ id, type, results }) {
   //   e === id && setFavorite(true)
   useEffect(() => {
     const getFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    console.log(getFavorite);
     if (getFavorite.length >= 1) {
       getFavorite.some((e) => e.id === id && setFavorite(true));
     }
@@ -20,9 +19,7 @@ function FavoriteButton({ id, type, results }) {
     if (favorite) {
       remFavLocalStorage(id);
     } else {
-      (
-        addFavLocalStorage(type, results[0])
-      );
+      addFavLocalStorage(type, results[0]);
     }
     setFavorite(!favorite);
   };
