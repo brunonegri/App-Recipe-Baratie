@@ -35,7 +35,7 @@ function MainDrinks({ results, type, dispatchResults }) {
     }
     oneResult();
   }, [results]);
-  console.log(results);
+  // console.log(results);
   const mN = 12;
   return (
     <div className="container-recipes">

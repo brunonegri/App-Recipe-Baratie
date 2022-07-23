@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, screen, waitFor } from '@testing-library/react';
 import renderWithRouter from './renderWithRouter';
 import MainDrinks from '../../Pages/MainDrinks';
 import MainFood from '../../Pages/MainFood';
@@ -9,8 +9,8 @@ import simulateFetch from './simulateFetch';
 import drinks from './drinks';
 import meals from './meals';
 
-describe('Testando o componente Footer', () => {
-  test('Verifica se é redirecionado para a página do perfil.', async () => {
+describe('Testando o componente Recipes', () => {
+  test('Verifica se renderiza o card e o drink GG', async () => {
     simulateFetch(drinks)
     const { history } = renderWithRouter(<MainDrinks> <Recipes /></MainDrinks>);
     history.push('/drinks');
@@ -23,7 +23,7 @@ describe('Testando o componente Footer', () => {
     cleanup()
   });
 
-  test('Verifica se é redirecionado para a página do perfil.', async () => {
+  test('Verifica se renderiza o card e a receita Corba.', async () => {
     simulateFetch(meals)
     const { history } = renderWithRouter(<MainFood> <Recipes /></MainFood>);
     history.push('/foods');
