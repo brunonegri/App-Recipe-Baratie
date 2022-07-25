@@ -9,11 +9,9 @@ function CardDoneRecipes({ results, index }) {
 //   console.log(results[index]);
   const history = useHistory();
   const [linkCopied, setLinkCopied] = useState(false);
-  //   const [tags, setTags] = useState('');
   const [topText, setTopText] = useState('');
 
   useEffect(() => {
-    // const splitTags = results[index].tags?.split(',');
     if (results[index].type === 'food') {
       const mergeText = `${results[index].nationality} - ${results[index].category}`;
       setTopText(mergeText);
@@ -21,10 +19,7 @@ function CardDoneRecipes({ results, index }) {
       const mergeText = `${results[index].alcoholicOrNot} - ${results[index].category}`;
       setTopText(mergeText);
     }
-    // setTags(splitTags);
   }, []);
-
-  //   console.log(tags);
 
   const handleClickShare = () => {
     if (results[index].type === 'food') {
@@ -45,6 +40,8 @@ function CardDoneRecipes({ results, index }) {
       history.push(`/drinks/${results[index].id}`);
     }
   };
+
+  console.log(results[index].tags);
 
   return (
     <div>
@@ -83,18 +80,11 @@ function CardDoneRecipes({ results, index }) {
           </button>
           {linkCopied && <p>Link copied!</p>}
         </div>
-        <div key={ index }>
-          <span data-testid={ `${index}-${index}-horizontal-tag` }>
-            {results[index].tags}
+        { results[index].tags && results[index].tags.map((e, i) => (
+          <span key={ i } data-testid={ `${index}-${e}-horizontal-tag` }>
+            {e}
           </span>
-        </div>
-        {/* {tags?.map((e, i) => (
-          <div>
-            <span data-testid={ `${i}-${e}-horizontal-tag` }>
-              {e}
-            </span>
-          </div>
-        ))} */}
+        ))}
 
       </div>
     </div>

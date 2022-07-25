@@ -1,4 +1,4 @@
-import { SET_API, SET_PAGE, SET_RESULTS, SET_ID } from './actionTypes';
+import { SET_API, SET_PAGE, SET_RESULTS, SET_COUNTER } from './actionTypes';
 
 const setApiAction = (set) => ({
   type: SET_API,
@@ -15,9 +15,9 @@ const setResultsAction = (set) => ({
   set,
 });
 
-const setIdAction = (set) => ({
-  type: SET_ID,
+const setCounterAction = (set) => ({
+  type: SET_COUNTER,
   set,
 });
 
-export { setApiAction, setPageAction, setResultsAction, setIdAction };
+export { setApiAction, setPageAction, setResultsAction, setCounterAction };
