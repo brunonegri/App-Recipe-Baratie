@@ -39,15 +39,17 @@ function MainFoods({ results, type, dispatchResults }) {
   return (
     <div className="container-recipes">
       <Header />
-      {results === null || results.length === 0
-        ? <h1>Loading...</h1>
-        : results.slice(0, mN).map((e, i) => (
-          <Recipes
-            key={ i }
-            index={ i }
-            name={ e.strMeal }
-            img={ e.strMealThumb }
-          />))}
+      <div className="recipe-container">
+        {results === null || results.length === 0
+          ? <h1>Loading...</h1>
+          : results.slice(0, mN).map((e, i) => (
+            <Recipes
+              key={ i }
+              index={ i }
+              name={ e.strMeal }
+              img={ e.strMealThumb }
+            />))}
+      </div>
       <Footer />
     </div>
   );

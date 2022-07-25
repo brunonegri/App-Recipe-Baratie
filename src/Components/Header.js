@@ -47,37 +47,45 @@ function Header({ pageName, dispatchSetApi }) {
   const searchIconValidate = title === 'Profile'
    || title === 'Done Recipes' || title === 'Favorite Recipes';
   return (
-    <div>
-      <button
-        type="button"
-        onClick={ goToProfile }
-      >
-        <img
-          src={ profileIcon }
-          alt="Icone de Perfil+"
-          data-testid="profile-top-btn"
-        />
-      </button>
-      <h2
-        data-testid="page-title"
-      >
-        {title}
-      </h2>
-      {!searchIconValidate && (
+    <div className="header-container">
+      <div className="header-mainbox">
         <button
+          className="header-btn"
           type="button"
-          onClick={ handleSearch }
+          onClick={ goToProfile }
         >
           <img
-            src={ searchIcon }
-            alt="Icone de Busca+"
-            data-testid="search-top-btn"
+            src={ profileIcon }
+            alt="Icone de Perfil+"
+            data-testid="profile-top-btn"
           />
         </button>
-      )}
-      {visivel === true ? (
-        <SearchBar />
-      ) : (!searchIconValidate && (<CategoriesButtons />))}
+        <h2
+          data-testid="page-title"
+        >
+          {title}
+        </h2>
+        <div>
+          {!searchIconValidate && (
+            <button
+              className="header-btn"
+              type="button"
+              onClick={ handleSearch }
+            >
+              <img
+                src={ searchIcon }
+                alt="Icone de Busca+"
+                data-testid="search-top-btn"
+              />
+            </button>
+          )}
+        </div>
+      </div>
+      <div>
+        {visivel === true ? (
+          <SearchBar />
+        ) : (!searchIconValidate && (<CategoriesButtons />))}
+      </div>
     </div>
   );
 }

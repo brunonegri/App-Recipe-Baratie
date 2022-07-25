@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Logo from '../images/Logo.png';
 
 function Login({ history }) {
   const [userEmail, setEmail] = useState('');
@@ -36,31 +37,41 @@ function Login({ history }) {
   };
 
   return (
-    <div>
-      <input
-        type="email"
-        data-testid="email-input"
-        name="email"
-        value={ userEmail }
-        placeholder="Email"
-        onChange={ handleEmail }
-      />
-      <input
-        type="password"
-        data-testid="password-input"
-        name="password"
-        value={ userPassword }
-        placeholder="Password"
-        onChange={ handlePassword }
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ valid }
-        onClick={ handleClick }
-      >
-        Enter
-      </button>
+    <div className="login-main">
+      <img className="logo" src={ Logo } alt="logo" />
+      <div className="input-login-container">
+        <input
+          className="input-login"
+          type="email"
+          data-testid="email-input"
+          name="email"
+          value={ userEmail }
+          placeholder="Email"
+          onChange={ handleEmail }
+        />
+      </div>
+      <div className="input-login-container">
+        <input
+          className="input-login"
+          type="password"
+          data-testid="password-input"
+          name="password"
+          value={ userPassword }
+          placeholder="Password"
+          onChange={ handlePassword }
+        />
+      </div>
+      <div>
+        <button
+          className="login-button"
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ valid }
+          onClick={ handleClick }
+        >
+          Enter
+        </button>
+      </div>
     </div>
   );
 }

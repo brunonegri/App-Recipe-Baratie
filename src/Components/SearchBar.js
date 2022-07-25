@@ -63,56 +63,61 @@ function SearchBar({ results, type, dispatchResults }) {
     }
   };
   return (
-    <form>
+    <form className="searchBar-container">
       <input
+        className="input-search"
         name="search"
         type="text"
         data-testid="search-input"
         placeholder="Search"
         onChange={ handleSelect }
       />
-      <label htmlFor="ingredient-search">
+      <div className="radiobtn">
+        <label htmlFor="ingredient-search">
 
-        <input
-          id="ingredient-search"
-          name="filter"
-          type="radio"
-          data-testid="ingredient-search-radio"
-          value="ingredient-search"
-          onChange={ handleSelect }
-        />
-        Ingredient
+          <input
+            id="ingredient-search"
+            name="filter"
+            type="radio"
+            data-testid="ingredient-search-radio"
+            value="ingredient-search"
+            onChange={ handleSelect }
+          />
+          Ingredient
 
-      </label>
+        </label>
 
-      <label htmlFor="name-search">
-        <input
-          id="name-search"
-          name="filter"
-          type="radio"
-          data-testid="name-search-radio"
-          value="name-search"
-          onChange={ handleSelect }
-        />
-        Name
+        <label htmlFor="name-search">
+          <input
+            id="name-search"
+            name="filter"
+            type="radio"
+            data-testid="name-search-radio"
+            value="name-search"
+            onChange={ handleSelect }
+          />
+          Name
 
-      </label>
+        </label>
 
-      <label htmlFor="first-letter">
+        <label htmlFor="first-letter">
 
-        <input
-          id="first-letter"
-          name="filter"
-          type="radio"
-          data-testid="first-letter-search-radio"
-          value="first-letter"
-          onChange={ handleSelect }
-        />
-        First Letter
+          <input
+            id="first-letter"
+            name="filter"
+            type="radio"
+            data-testid="first-letter-search-radio"
+            value="first-letter"
+            onChange={ handleSelect }
+          />
+          First Letter
 
-      </label>
+        </label>
+
+      </div>
 
       <button
+        className="search-btn"
         type="button"
         data-testid="exec-search-btn"
         onClick={ handleClick }
