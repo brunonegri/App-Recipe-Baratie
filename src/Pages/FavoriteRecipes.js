@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import CardFavoriteRecipes from '../Components/CardFavoriteRecipes';
 
-function FavoriteRecipes() {
+function FavoriteRecipes({ counter }) {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
-  const getFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
   useEffect(() => {
+    const getFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     setFavoriteRecipes(getFavorite);
   }, []);
-  // criar função de filtro usando setFavoriteRecipes...
-  /* const filterFavoriteRecipes = (e) => {
-    const filteredRecipes = favoriteRecipes.filter((e) => {
 
-    });
-    setFavoriteRecipes(filteredRecipes);
-  }; */
+  useEffect(() => {
+    const getFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    setFavoriteRecipes(getFavorite);
+  }, [counter]);
 
   const handleFilterFood = () => {
     const getDone = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -69,4 +69,13 @@ function FavoriteRecipes() {
     </div>
   );
 }
-export default FavoriteRecipes;
+
+const mapStateToProps = (state) => ({
+  counter: state.page.setCounter,
+});
+
+FavoriteRecipes.propTypes = {
+  counter: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(FavoriteRecipes);

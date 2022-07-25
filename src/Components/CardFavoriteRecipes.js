@@ -8,6 +8,7 @@ import FavoriteButton from './FavoriteButton';
 function CardFavoriteRecipes({ index, results }) {
   const history = useHistory();
   const [linkCopied, setLinkCopied] = useState(false);
+  // const [counter, setCounter] = useState(0);
   const [topText, setTopText] = useState('');
 
   useEffect(() => {

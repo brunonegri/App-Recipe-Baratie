@@ -1,10 +1,10 @@
-import { SET_API, SET_ID, SET_PAGE, SET_RESULTS } from '../Actions/actionTypes';
+import { SET_API, SET_COUNTER, SET_PAGE, SET_RESULTS } from '../Actions/actionTypes';
 
 const initialState = {
   setApi: '',
   setPage: '',
   setResults: [],
-  setId: '',
+  setCounter: 0,
 };
 
 const page = (state = initialState, action) => {
@@ -18,9 +18,9 @@ const page = (state = initialState, action) => {
   case SET_RESULTS:
     return { ...state,
       setResults: action.set };
-  case SET_ID:
+  case SET_COUNTER:
     return { ...state,
-      setId: action.set };
+      setCounter: action.set };
   default:
     return state;
   }
