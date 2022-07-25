@@ -22,6 +22,26 @@ const initProgressLocalStorage = (type, id) => {
   }
 };
 
+const remIngridientLocalStorage = (type, id, ingredient) => {
+  const getLocalInProgress = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+  const removeIngredient = getLocalInProgress[type][id].filter((e) => e !== ingredient);
+  if (type === 'meals') {
+    const inProgress = {
+      cocktails: { },
+      meals: { },
+    };
+    inProgress.meals = { ...inProgress.meals, ...{ [id]: removeIngredient } };
+    return localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
+  } if (type === 'cocktails') {
+    const inProgress = {
+      cocktails: { },
+      meals: { },
+    };
+    inProgress.cocktails = { ...inProgress.cocktails, ...{ [id]: removeIngredient } };
+    return localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
+  }
+};
+
 const addFavLocalStorage = (type, results) => {
   const favRecipe = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
   const typeForLocal = type === 'cocktails' ? 'drink' : 'food';
@@ -46,10 +66,26 @@ const remFavLocalStorage = (id) => {
   return localStorage.setItem('favoriteRecipes', JSON.stringify(filter1));
 };
 
-const remIngridientLocalStorage = (type, id, ingredient) => {
-  const favRecipe = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-  const filter1 = favRecipe[type][id].filter((e) => e !== ingredient);
-  return localStorage.setItem('inProgressRecipes', JSON.stringify(filter1));
+const addDoneRecipeLocalStorage = (type, results, date) => {
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  const typeForLocal = type === 'cocktails' ? 'drink' : 'food';
+  const nationality = results.strArea === undefined ? '' : results.strArea;
+  const alcoólico = results.strAlcoholic === undefined ? '' : results.strAlcoholic;
+  const tags = results.strTags === null ? '' : results.strTags;
+  console.log(tags);
+  const objDoneRecipe = {
+    id: `${results.idMeal || results.idDrink}`,
+    type: `${typeForLocal}`,
+    nationality,
+    category: `${results.strCategory}`,
+    alcoholicOrNot: `${alcoólico}`,
+    name: `${results.strMeal || results.strDrink}`,
+    image: `${results.strMealThumb || results.strDrinkThumb}`,
+    doneDate: date,
+    tags,
+  };
+  doneRecipes.push(objDoneRecipe);
+  return localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 };
 
 const initDoneLocalStorage = () => {
@@ -64,4 +100,8 @@ const getInProgress = () => {
 
 export { initProgressLocalStorage,
   initDoneLocalStorage,
-  getInProgress, addFavLocalStorage, remFavLocalStorage, remIngridientLocalStorage };
+  getInProgress,
+  addFavLocalStorage,
+  remFavLocalStorage,
+  remIngridientLocalStorage,
+  addDoneRecipeLocalStorage };

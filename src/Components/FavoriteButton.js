@@ -5,7 +5,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { addFavLocalStorage,
   remFavLocalStorage } from '../0 - Services/LocalStorage/LocalStorage';
 
-function FavoriteButton({ id, type, results }) {
+function FavoriteButton({ id, type, results, dataTest }) {
   const [favorite, setFavorite] = useState(false);
   //   e === id && setFavorite(true)
   useEffect(() => {
@@ -33,7 +33,7 @@ function FavoriteButton({ id, type, results }) {
         <img
           src={ favorite ? blackHeartIcon : whiteHeartIcon }
           alt="Icone de Favoritar"
-          data-testid="favorite-btn"
+          data-testid={ dataTest }
         />
       </button>
     </div>
@@ -44,6 +44,7 @@ FavoriteButton.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  dataTest: PropTypes.string.isRequired,
 };
 
 export default FavoriteButton;

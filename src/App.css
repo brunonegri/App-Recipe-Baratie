@@ -49,6 +49,18 @@ body {
   z-index: 0;
 }
 
+.finish-recipe-btn {
+  bottom: 0;
+  position: fixed;
+  z-index: 0;
+}
+
+.filter-done-recipes {
+  margin: 20px;
+
+  /* z-index: 0; */
+}
+
 
 @keyframes shake {
 
