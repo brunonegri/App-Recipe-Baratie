@@ -40,16 +40,19 @@ function MainDrinks({ results, type, dispatchResults }) {
   return (
     <div className="container-recipes">
       <Header />
-      {results === null || results === undefined
-        ? <h1>Loading...</h1>
-        : results.slice(0, mN).map((e, i) => (
-          <Recipes
-            key={ i }
-            index={ i }
-            name={ e.strDrink }
-            img={ e.strDrinkThumb }
-          />
-        ))}
+      <div className="recipe-container">
+        {results === null || results === undefined
+          ? <h1>Loading...</h1>
+          : results.slice(0, mN).map((e, i) => (
+            <Recipes
+              key={ i }
+              index={ i }
+              name={ e.strDrink }
+              img={ e.strDrinkThumb }
+            />
+          ))}
+
+      </div>
       <Footer />
     </div>
   );

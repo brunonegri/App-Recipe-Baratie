@@ -1,18 +1,14 @@
-/* @font-face {
-  font-family: 'onepiecefont';
-  src: local('onepiecefont') , url('./fonts/onepiecefont.ttf');
-} */
-
 body {
   background: url('./images/baratie.png');
-
-  /* font-family: onepiecefont; */
   height: 100vh;
   margin: 0;
   max-width: 360px;
   padding: 0;
 }
 
+#id {
+  font-family: onepiecefont;
+}
 
 .login-main {
   align-items: center;
@@ -52,6 +48,9 @@ body {
 .header-container {
   display: flex;
   flex-direction: column;
+  background-color: aqua;
+  padding-bottom: 10px;
+  /* position: fixed; */
 }
 
 .header-mainbox {
@@ -66,12 +65,12 @@ body {
 }
 
 .category-btn {
-
+  font-size: 15px;
   /* background-color: #020f59; */
   border: 1px solid #020f59;
   border-radius: 2px;
-  margin: 2px 5px;
-  width: 110px
+  margin: 2px 1px;
+  width: 118px
 
   /* color: white; */
 }
@@ -104,6 +103,16 @@ body {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  color: #020f59;
+  font-style: oblique;
+}
+
+#ingredient-search , #name-search , #first-letter {
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 2px;
 }
 
 .searchBar-container label {
@@ -133,6 +142,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   max-width: 360px;
+  margin-bottom: 48px;
 }
 
 .recipe-container button {
@@ -153,11 +163,24 @@ body {
   width: 50%;
 }
 
+.card-container button {
+  width: 95%;
+  box-shadow: 2px 2px #172052;
+  background-color: rgb(175, 212, 235);
+}
+
+.card-name {
+  margin: 2px auto;
+}
 
 .footer-container {
   bottom: 0;
   position: fixed;
   z-index: 0;
+  width: 100%;
+  background-color: aqua;
+  display: flex;
+  justify-content: space-between;
 }
 
 .recipe-img {
@@ -165,7 +188,9 @@ body {
 }
 
 .card-image {
-  width: 100px;
+  margin-top: 15px;
+  width: 150px;
+  border-radius: 5px;
 }
 
 .ingredient-container {
