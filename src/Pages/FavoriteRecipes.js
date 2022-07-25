@@ -9,6 +9,13 @@ function FavoriteRecipes() {
   useEffect(() => {
     setFavoriteRecipes(getFavorite);
   }, []);
+  // criar função de filtro usando setFavoriteRecipes...
+  /* const filterFavoriteRecipes = (e) => {
+    const filteredRecipes = favoriteRecipes.filter((e) => {
+
+    });
+    setFavoriteRecipes(filteredRecipes);
+  }; */
 
   const handleFilterFood = () => {
     const getDone = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];

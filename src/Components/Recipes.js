@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 function Recipes({ index, name, img, results }) {
   const history = useHistory();
+  // console.log(history);
   const handleClick = () => {
     if (history.location.pathname === '/drinks') {
       history.push(`/drinks/${results[index].idDrink}`);

@@ -91,6 +91,7 @@ function RecipeDetails(props) {
           alt="Thumb"
         />
         <h2 data-testid="recipe-title">{ setTextTitle(results[0], typeForApi)}</h2>
+
         <ShareButton
           link={ `http://localhost:3000${pathname}` }
         />
