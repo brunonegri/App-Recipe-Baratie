@@ -1,12 +1,12 @@
 import React from 'react';
 import { cleanup, screen, waitFor } from '@testing-library/react';
-import renderWithRouter from './renderWithRouter';
+import renderWithRouter from '../Services/renderWithRouter';
 import Recipes from '../../Components/Recipes';
 import userEvent from '@testing-library/user-event';
-import simulateFetch from './simulateFetch';
-import oneDrinkId15997 from './oneDrinkId15997';
-import drinks from './drinks';
-import meals from './meals';
+import simulateFetch from '../Services/simulateFetch';
+import oneDrinkId15997 from '../Mocks/oneDrinkId15997';
+import drinks from '../Mocks/drinks';
+import meals from '../Mocks/meals';
 import RecipeDetails from '../../Pages/RecipeDetails';
 import App from '../../App';
 import MainDrinks from '../../Pages/MainDrinks';
