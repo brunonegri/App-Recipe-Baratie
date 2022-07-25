@@ -1,49 +1,70 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Header from '../Components/Header';
+import CardDoneRecipes from '../Components/CardDoneRecipes';
 
 function DoneRecipes() {
-  /* const [doneRecipes, setDoneRecipes] = useState([]); */
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
-  /*  useEffect(() => {
+  useEffect(() => {
     const getDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-  }, []); */
+    setDoneRecipes(getDone);
+  }, []);
+
+  console.log(doneRecipes);
+
+  const handleFilterFood = () => {
+    const getDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const filterFood = getDone.filter((e) => e.type === 'food');
+    setDoneRecipes(filterFood);
+  };
+
+  const handleFilterDrinks = () => {
+    const getDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const filterDrink = getDone.filter((e) => e.type === 'drink');
+    setDoneRecipes(filterDrink);
+  };
+
+  const handleFilterAll = () => {
+    const getDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    setDoneRecipes(getDone);
+  };
 
   return (
     <div>
-      <div key={ index }>
-        <img
-          src={ image }
-          alt="card-recipes-done"
-          data-testid={ `${index}-horizontal-image` }
-        />
 
-        <p data-testid={ `${index}-horizontal-top-text` }>
-          {category}
-        </p>
-
-        <p data-testid={ `${index}-horizontal-name` }>
-          { Name }
-        </p>
-        <p data-testid={ `${index}-horizontal-done-date` }>
-          { doneDate }
-        </p>
-
+      <Header />
+      <div className="filter-done-recipes">
         <button
           type="button"
-          // onClick={ () => {}} COPY
+          onClick={ handleFilterAll }
+          data-testid="filter-by-all-btn"
         >
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            alt="share-url"
-          />
+          All
         </button>
-        <div key={ idx }>
-          <p data-testid={ `${index}-${tag}-horizontal-tag` }>
-            { tag }
-          </p>
-        </div>
-
+        <button
+          type="button"
+          onClick={ handleFilterFood }
+          data-testid="filter-by-food-btn"
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          onClick={ handleFilterDrinks }
+          data-testid="filter-by-drink-btn"
+        >
+          Drinks
+        </button>
       </div>
+
+      { doneRecipes === null || doneRecipes.length === 0
+        ? <h1>Loading...</h1>
+        : doneRecipes && doneRecipes?.map((e, i) => (
+          <CardDoneRecipes
+            key={ i }
+            index={ i }
+            results={ doneRecipes }
+          />))}
     </div>
   );
 }

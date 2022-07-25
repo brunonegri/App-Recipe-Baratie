@@ -94,7 +94,12 @@ function RecipeDetails(props) {
         <ShareButton
           link={ `http://localhost:3000${pathname}` }
         />
-        <FavoriteButton id={ id } results={ results } type={ typeForLocal } />
+        <FavoriteButton
+          dataTest="favorite-btn"
+          id={ id }
+          results={ results }
+          type={ typeForLocal }
+        />
         <p data-testid="recipe-category">
           {setTextCategory(results[0], typeForApi)}
         </p>
