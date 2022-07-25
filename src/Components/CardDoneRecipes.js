@@ -14,8 +14,13 @@ function CardDoneRecipes({ results, index }) {
 
   useEffect(() => {
     // const splitTags = results[index].tags?.split(',');
-    const mergeText = `${results[index].nationality} - ${results[index].category}`;
-    setTopText(mergeText);
+    if (results[index].type === 'food') {
+      const mergeText = `${results[index].nationality} - ${results[index].category}`;
+      setTopText(mergeText);
+    } else {
+      const mergeText = `${results[index].alcoholicOrNot} - ${results[index].category}`;
+      setTopText(mergeText);
+    }
     // setTags(splitTags);
   }, []);
 
@@ -57,10 +62,11 @@ function CardDoneRecipes({ results, index }) {
         <p data-testid={ `${index}-horizontal-top-text` }>
           {topText}
         </p>
-
-        <p data-testid={ `${index}-horizontal-name` }>
-          { results[index].name }
-        </p>
+        <button type="button" onClick={ handleClickRecipe }>
+          <p data-testid={ `${index}-horizontal-name` }>
+            { results[index].name }
+          </p>
+        </button>
         <p data-testid={ `${index}-horizontal-done-date` }>
           { results[index].doneDate }
         </p>

@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import FavoriteButton from './FavoriteButton';
 
 function CardFavoriteRecipes({ index, results }) {
-//   const history = useHistory();
+  const history = useHistory();
   const [linkCopied, setLinkCopied] = useState(false);
   const [topText, setTopText] = useState('');
 
   useEffect(() => {
-    const mergeText = `${results[index].nationality} - ${results[index].category}`;
-    setTopText(mergeText);
+    if (results[index].type === 'food') {
+      const mergeText = `${results[index].nationality} - ${results[index].category}`;
+      setTopText(mergeText);
+    } else {
+      const mergeText = `${results[index].alcoholicOrNot} - ${results[index].category}`;
+      setTopText(mergeText);
+    }
   }, []);
 
   const handleClickShare = () => {
@@ -27,21 +32,35 @@ function CardFavoriteRecipes({ index, results }) {
     }
   };
 
+  const handleClickRecipe = () => {
+    if (results[index].type === 'food') {
+      history.push(`/foods/${results[index].id}`);
+    } else {
+      history.push(`/drinks/${results[index].id}`);
+    }
+  };
+
   return (
     <div>
       <div key={ index }>
-        <img
-          className="card-image"
-          src={ results[index].image }
-          alt="foodImage"
-          data-testid={ `${index}-horizontal-image` } // imagem do card de receita
-        />
+        <button type="button" onClick={ handleClickRecipe }>
+
+          <img
+            className="card-image"
+            src={ results[index].image }
+            alt="foodImage"
+            data-testid={ `${index}-horizontal-image` } // imagem do card de receita
+          />
+        </button>
         <p data-testid={ `${index}-horizontal-top-text` }>
           {topText}
         </p>
-        <p data-testid={ `${index}-horizontal-name` }>
-          {results[index].name}
-        </p>
+        <button type="button" onClick={ handleClickRecipe }>
+          <p data-testid={ `${index}-horizontal-name` }>
+            {results[index].name}
+          </p>
+        </button>
+
         <FavoriteButton
           id={ results[index].id }
           results={ results }

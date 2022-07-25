@@ -10,10 +10,6 @@ function FavoriteRecipes() {
     setFavoriteRecipes(getFavorite);
   }, []);
 
-  useEffect(() => {
-    setFavoriteRecipes(getFavorite);
-  }, [favoriteRecipes.length]);
-
   const handleFilterFood = () => {
     const getDone = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const filterFood = getDone.filter((e) => e.type === 'food');
@@ -28,10 +24,11 @@ function FavoriteRecipes() {
 
   const handleFilterAll = () => {
     const getDone = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    setDoneRecipes(getDone);
+    console.log(getDone);
+    setFavoriteRecipes(getDone);
   };
 
-  console.log(favoriteRecipes);
+  // console.log(favoriteRecipes);
 
   return (
     <div>
