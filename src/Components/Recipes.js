@@ -15,22 +15,24 @@ function Recipes({ index, name, img, results }) {
     }
   };
   return (
-    <button
-      type="button"
-      onClick={ handleClick }
-    >
-      <div className="card-container" data-testid={ `${index}-recipe-card` }>
 
-        <p className="card-name" data-testid={ `${index}-card-name` }>{name}</p>
+    <div className="card-container" data-testid={ `${index}-recipe-card` }>
+      <button
+        type="button"
+        onClick={ handleClick }
+      >
+
         <img
           className="card-image"
           data-testid={ `${index}-card-img` }
           src={ img }
           alt="cardThumb"
         />
+        <p className="card-name" data-testid={ `${index}-card-name` }>{name}</p>
 
-      </div>
-    </button>
+      </button>
+    </div>
+
   );
 }
 

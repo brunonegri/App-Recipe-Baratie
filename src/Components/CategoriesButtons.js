@@ -65,6 +65,7 @@ function CategoriesButtons({ dispatchResults }) {
   return (
     <div>
       <button
+        className="category-btn"
         type="button"
         data-testid="All-category-filter"
         onClick={ defaultFetch }
@@ -76,6 +77,7 @@ function CategoriesButtons({ dispatchResults }) {
         <button
           key={ i }
           type="button"
+          className="category-btn"
           data-testid={ `${e.strCategory}-category-filter` }
           onClick={ handleClick }
           value={ e.strCategory }
