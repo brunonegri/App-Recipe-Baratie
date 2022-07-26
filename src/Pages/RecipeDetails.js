@@ -25,6 +25,7 @@ function RecipeDetails(props) {
   //   23
   const history = useHistory();
   const { pathname } = history.location;
+  console.log(pathname);
   const typeForApi = setLocalType(pathname);
   const typeForLocal = `${setLocalType(pathname)}s`;
 
@@ -70,6 +71,14 @@ function RecipeDetails(props) {
     waitFunc();
   }, [results]);
 
+  useEffect(() => {
+    async function fetchApi() {
+      dispatchResults(await setApiType(pathname, id));
+      setRecomendation(await setRecomendationApi(typeForApi));
+    }
+    fetchApi();
+  }, [pathname]);
+
   const handleStartRecipe = () => {
     const getInProgressLocal = getInProgress();
     getInProgressLocal[typeForLocal] = {
@@ -81,29 +90,35 @@ function RecipeDetails(props) {
   const handleContinueRecipe = () => {
     history.push(`/${foodsOrDrinks}/${id}/in-progress`);
   };
+
+  console.log(recomendation);
   return (
     results.length === 0 ? <h1>Loading</h1> : (
-      <div>
+      <div className="details-main-container">
         <img
           className="recipe-img"
           data-testid="recipe-photo"
           src={ setSrcImage(results[0], typeForApi) }
           alt="Thumb"
         />
-        <h2 data-testid="recipe-title">{ setTextTitle(results[0], typeForApi)}</h2>
-
-        <ShareButton
-          link={ `http://localhost:3000${pathname}` }
-        />
-        <FavoriteButton
-          dataTest="favorite-btn"
-          id={ id }
-          results={ results }
-          type={ typeForLocal }
-        />
+        <div className="details-title-container">
+          <h2 data-testid="recipe-title">{ setTextTitle(results[0], typeForApi)}</h2>
+          <div>
+            <ShareButton
+              link={ `http://localhost:3000${pathname}` }
+            />
+            <FavoriteButton
+              dataTest="favorite-btn"
+              id={ id }
+              results={ results }
+              type={ typeForLocal }
+            />
+          </div>
+        </div>
         <p data-testid="recipe-category">
           {setTextCategory(results[0], typeForApi)}
         </p>
+        <h4>Ingredients</h4>
         <div className="ingredient-container">
           {ingredients && ingredients.map((e, i) => (
             <li
@@ -113,20 +128,29 @@ function RecipeDetails(props) {
               {e}
             </li>))}
         </div>
+        <h4>Instructions</h4>
         <p data-testid="instructions">{results[0].strInstructions}</p>
-
-        {results[0].strYoutube ? (<iframe
-          data-testid="video"
-          width="300"
-          height="250"
-          src={ results[0]?.strYoutube
+        <div className="video-container">
+          {results[0].strYoutube ? (
+            <div>
+              <h4>Video</h4>
+              <iframe
+                data-testid="video"
+                width="340"
+                height="230"
+                src={ results[0]?.strYoutube
             && results[0].strYoutube.replace('watch?v=', 'embed/') }
-          frameBorder="0"
-          title="Embedded youtube"
-        />) : null}
+                frameBorder="0"
+                title="Embedded youtube"
+              />
+            </div>
+          ) : null}
+        </div>
+        <h4>Recomendation</h4>
         <div className="recomendation-carousel">
           {recomendation.map((e, i) => (
             <Recomendation
+              results={ recomendation }
               key={ i }
               index={ i }
               img={ setSrcImgRecomendation(e, typeForApi) }

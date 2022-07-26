@@ -13,6 +13,7 @@ function ShareButton(pathname) {
   return (
     <div>
       <button
+        className="imgbtn"
         type="button"
         onClick={ handleClick }
       >

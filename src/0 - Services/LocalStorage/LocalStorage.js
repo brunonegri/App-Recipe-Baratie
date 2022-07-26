@@ -71,7 +71,7 @@ const addDoneRecipeLocalStorage = (type, results, date) => {
   const typeForLocal = type === 'cocktails' ? 'drink' : 'food';
   const nationality = results.strArea === undefined ? '' : results.strArea;
   const alcoólico = results.strAlcoholic === undefined ? '' : results.strAlcoholic;
-  const tagSplit = results.strTags.split(',');
+  const tagSplit = results.strTags?.split(',');
   const tags = results.strTags === null ? '' : tagSplit;
   console.log(tags);
   const objDoneRecipe = {

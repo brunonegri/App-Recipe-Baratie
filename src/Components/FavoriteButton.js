@@ -31,6 +31,7 @@ function FavoriteButton({ id, type, results, dataTest, dispatchCounter, counterV
   return (
     <div>
       <button
+        className="imgbtn"
         type="button"
         onClick={ handleClick }
       >
