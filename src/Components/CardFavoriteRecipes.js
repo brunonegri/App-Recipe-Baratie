@@ -16,7 +16,7 @@ function CardFavoriteRecipes({ index, results }) {
       const mergeText = `${results[index].nationality} - ${results[index].category}`;
       setTopText(mergeText);
     } else {
-      const mergeText = `${results[index].alcoholicOrNot} - ${results[index].category}`;
+      const mergeText = `${results[index].alcoholicOrNot}`;
       setTopText(mergeText);
     }
   }, []);
@@ -42,33 +42,35 @@ function CardFavoriteRecipes({ index, results }) {
   };
 
   return (
-    <div>
-      <div key={ index }>
-        <button type="button" onClick={ handleClickRecipe }>
+    <div className="favoriteCard" key={ index }>
+      <button className="img-fav" type="button" onClick={ handleClickRecipe }>
 
-          <img
-            className="card-image"
-            src={ results[index].image }
-            alt="foodImage"
-            data-testid={ `${index}-horizontal-image` } // imagem do card de receita
-          />
-        </button>
-        <p data-testid={ `${index}-horizontal-top-text` }>
-          {topText}
-        </p>
-        <button type="button" onClick={ handleClickRecipe }>
-          <p data-testid={ `${index}-horizontal-name` }>
-            {results[index].name}
-          </p>
-        </button>
-
-        <FavoriteButton
-          id={ results[index].id }
-          results={ results }
-          type={ results[index].type }
-          dataTest={ `${index}-horizontal-favorite-btn` }
+        <img
+          className="card-image"
+          src={ results[index].image }
+          alt="foodImage"
+          data-testid={ `${index}-horizontal-image` } // imagem do card de receita
         />
-        <div>
+      </button>
+      <div className="favname">
+        <div className="test">
+          <p className="toptext" data-testid={ `${index}-horizontal-top-text` }>
+            {topText}
+          </p>
+          <button type="button" onClick={ handleClickRecipe }>
+            <p data-testid={ `${index}-horizontal-name` }>
+              {results[index].name}
+            </p>
+          </button>
+        </div>
+        <div className="share-container">
+          <FavoriteButton
+            id={ results[index].id }
+            results={ results }
+            type={ results[index].type }
+            dataTest={ `${index}-horizontal-favorite-btn` }
+          />
+
           <button
             type="button"
             onClick={ handleClickShare }
@@ -83,6 +85,7 @@ function CardFavoriteRecipes({ index, results }) {
         </div>
       </div>
     </div>
+
   );
 }
 

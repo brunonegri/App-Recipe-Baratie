@@ -369,6 +369,64 @@ p {
   width: 95%;
 }
 
+/* FAVORITE PAGE  */
+.favoriteCard {
+  border-radius: 10px;
+  box-shadow: 2px 3px black;
+  display: flex;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.favname {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.favname button {
+  background: none;
+  border: none;
+}
+
+.favname p {
+  display: flex;
+  justify-content: start;
+  margin: 0;
+}
+
+.favname div {
+  display: flex;
+  justify-content: center;
+}
+
+.img-fav {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.img-fav img {
+  height: 100%;
+  margin: 0;
+}
+
+.test {
+  display: flex;
+  flex-direction: column;
+}
+
+.toptext {
+  font-size: 15px;
+}
+
+
+.share-container {
+  display: flex;
+  height: 30px;
+}
+
 @keyframes shake {
 
   0% {
