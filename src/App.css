@@ -3,6 +3,7 @@
   src: url('https://fonts.googleapis.com/css2?family=Oldenburg&display=swap');
 }
 
+
 body {
   font-family: 'Oldenburg' , cursive;
   height: 100vh;
@@ -395,7 +396,7 @@ p {
 .done-page {
   background: url('./images/pirate/baratie2.png');
   background-position-y: 50px;
-  height: 100%;
+  height: 100vh;
 }
 
 .filter-done-recipes {
