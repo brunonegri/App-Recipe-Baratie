@@ -102,13 +102,17 @@ function RecipeDetails(props) {
           alt="Thumb"
         />
         <div className="details-title-container">
-          <h2
-            className="recipe-title"
-            data-testid="recipe-title"
-          >
-            { setTextTitle(results[0], typeForApi)}
-
-          </h2>
+          <div className="box-title">
+            <h2
+              className="recipe-title"
+              data-testid="recipe-title"
+            >
+              { setTextTitle(results[0], typeForApi)}
+            </h2>
+            <p data-testid="recipe-category">
+              {setTextCategory(results[0], typeForApi)}
+            </p>
+          </div>
           <div>
             <ShareButton
               link={ `http://localhost:3000${pathname}` }
@@ -121,9 +125,7 @@ function RecipeDetails(props) {
             />
           </div>
         </div>
-        <p data-testid="recipe-category">
-          {setTextCategory(results[0], typeForApi)}
-        </p>
+
         <div className="ingredient-container">
           <h4>Ingredients</h4>
           {ingredients && ingredients.map((e, i) => (
@@ -134,8 +136,10 @@ function RecipeDetails(props) {
               {e}
             </li>))}
         </div>
-        <h4>Instructions</h4>
-        <p data-testid="instructions">{results[0].strInstructions}</p>
+        <div className="instructions-container">
+          <h4>Instructions</h4>
+          <p data-testid="instructions">{results[0].strInstructions}</p>
+        </div>
         <div className="video-container">
           {results[0].strYoutube ? (
             <div>

@@ -99,7 +99,14 @@ function RecipeInProgress(props) {
           alt="DrinkThumb"
         />
         <div className="details-title-container">
-          <h2 data-testid="recipe-title">{results[0].strDrink || results[0].strMeal}</h2>
+          <div className="box-title">
+            <h2 data-testid="recipe-title">
+              {results[0].strDrink || results[0].strMeal}
+            </h2>
+            <p data-testid="recipe-category">
+              {results[0].strAlcoholic || results[0].strCategory}
+            </p>
+          </div>
           <div>
             <ShareButton
               link={ `http://localhost:3000${pathname.replace('/in-progress', '')}` }
@@ -112,9 +119,6 @@ function RecipeInProgress(props) {
             />
           </div>
         </div>
-        <p data-testid="recipe-category">
-          {results[0].strAlcoholic || results[0].strCategory}
-        </p>
         <div className="ingredient-container">
           <h4>Ingredients</h4>
           {ingredients && ingredients.map((e, i) => (
