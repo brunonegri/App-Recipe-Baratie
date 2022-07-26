@@ -32,9 +32,9 @@ function Profile() {
     <div>
       <Header />
       <header title="Profile" />
-      <div>
+      <div className="profile-menu">
         <div>
-          <h3 id="test" data-testid="profile-email">{user.email}</h3>
+          <h3 data-testid="profile-email">{user.email}</h3>
         </div>
         <button
           type="button"

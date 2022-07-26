@@ -1,5 +1,6 @@
 body {
-  background: url('./images/baratie.png');
+
+  /* background: url('./images/baratie.png'); */
   height: 100vh;
   margin: 0;
   max-width: 360px;
@@ -53,6 +54,8 @@ p {
   background-color: aqua;
   display: flex;
   flex-direction: column;
+
+  /* background-color: aqua; */
   padding-bottom: 10px;
 
   /* position: fixed; */
@@ -177,15 +180,6 @@ p {
   margin: 2px auto;
 }
 
-.card-image {
-  border-radius: 5px;
-  margin-top: 15px;
-  width: 150px;
-}
-
-.filter-done-recipes {
-  margin: 20px;
-}
 
 .footer-container {
   background-color: aqua;
@@ -204,8 +198,12 @@ p {
 }
 
 .details-title-container {
+
+  /* background-color: aqua; */
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  z-index: 0;
 }
 
 .details-title-container div {
@@ -217,6 +215,12 @@ p {
   height: 250px;
   margin-bottom: 10px;
   width: 100%;
+}
+
+.card-image {
+  border-radius: 5px;
+  margin-top: 15px;
+  width: 150px;
 }
 
 .ingredient-container {
@@ -286,6 +290,83 @@ p {
 .imgbtn {
   background: none;
   border: none;
+}
+
+.filter-done-recipes {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.filter-done-recipes button {
+  border-radius: 5px;
+  margin: auto 10px;
+}
+
+.done-button-item {
+  background-color: aliceblue;
+  border-radius: 10px;
+  display: flex;
+
+  /* box-shadow: 1px 2px #020f59; */
+  height: 180px;
+
+  /* flex-direction: column; */
+  margin: auto 10px;
+  margin-bottom: 10px;
+}
+
+.card-image-done {
+  border-radius: 10px;
+  box-shadow: 1px 2px #020f59;
+  height: 180px;
+  width: 165px;
+}
+
+.done-button-item button {
+  background: none;
+  border: none;
+  margin-right: 5px;
+  padding: 0;
+}
+
+.done-details {
+  width: 100%;
+
+  /* font-size: 80%; */
+}
+
+.testando {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: text-top;
+  width: 100%;
+}
+
+.span {
+  display: flex;
+  font-size: small;
+  justify-content: center;
+}
+
+.span span {
+  margin: auto 5px;
+}
+
+.profile-menu {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.profile-menu button {
+  border-radius: 10px;
+  box-shadow: 2px 2px #172052;
+  margin-block: 10px;
+  padding: 2px;
+  width: 95%;
 }
 
 @keyframes shake {
