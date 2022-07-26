@@ -48,7 +48,7 @@ body {
 .header-container {
   display: flex;
   flex-direction: column;
-  background-color: aqua;
+  /* background-color: aqua; */
   padding-bottom: 10px;
   /* position: fixed; */
 }
@@ -56,7 +56,7 @@ body {
 .header-mainbox {
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content:space-between;
 }
 
 .header-btn {
@@ -178,7 +178,7 @@ body {
   position: fixed;
   z-index: 0;
   width: 100%;
-  background-color: aqua;
+  /* background-color: aqua; */
   display: flex;
   justify-content: space-between;
 }
@@ -188,7 +188,7 @@ body {
 }
 
 .card-image {
-  margin-top: 15px;
+  /* margin-top: 15px; */
   width: 150px;
   border-radius: 5px;
 }
@@ -222,6 +222,76 @@ body {
 
 .filter-done-recipes {
   margin: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.filter-done-recipes button {
+  border-radius: 5px;
+  margin: auto 10px;
+}
+
+.done-button-item {
+  display: flex;
+  /* flex-direction: column; */
+  margin: auto 10px;
+  margin-bottom: 10px;
+  background-color: aliceblue;
+  border-radius: 10px;
+  /* box-shadow: 1px 2px #020f59; */
+  height: 180px;
+}
+
+.card-image-done {
+  border-radius: 10px;
+  height: 180px;
+  width: 165px;
+  box-shadow: 1px 2px #020f59;
+}
+
+.done-button-item button {
+  padding: 0px;
+  margin-right: 5px;
+  border: none;
+  background: none;
+}
+ 
+.done-details {
+  width: 100%;
+  /* font-size: 80%; */
+}
+
+.testando {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  vertical-align: text-top;
+}
+
+#span {
+  display: flex;
+  justify-content: center;
+  font-size: small;
+}
+
+#span span {
+  margin: auto 5px;
+}
+
+.profile-menu {
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-menu button {
+  width: 95%;
+  margin-block: 10px;
+  padding: 2px;
+  box-shadow: 2px 2px #172052;
+  border-radius: 10px;
 }
 
 /* .card-container {

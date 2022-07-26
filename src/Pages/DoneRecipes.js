@@ -56,7 +56,6 @@ function DoneRecipes() {
           Drinks
         </button>
       </div>
-
       { doneRecipes === null || doneRecipes.length === 0
         ? <h1>Loading...</h1>
         : doneRecipes && doneRecipes?.map((e, i) => (
