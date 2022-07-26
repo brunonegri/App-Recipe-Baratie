@@ -44,30 +44,20 @@ function CardDoneRecipes({ results, index }) {
   console.log(results[index].tags);
 
   return (
-    <div>
-      <div key={ index }>
-        <button type="button" onClick={ handleClickRecipe }>
-
-          <img
-            className="card-image"
-            src={ results[index].image }
-            alt="card-recipes-done"
-            data-testid={ `${index}-horizontal-image` }
-          />
-        </button>
-
-        <p data-testid={ `${index}-horizontal-top-text` }>
-          {topText}
-        </p>
-        <button type="button" onClick={ handleClickRecipe }>
-          <p data-testid={ `${index}-horizontal-name` }>
-            { results[index].name }
+    <div className="done-button-item">
+      <button id="done-button" type="button" onClick={ handleClickRecipe }>
+        <img
+          className="card-image-done"
+          src={ results[index].image }
+          alt="card-recipes-done"
+          data-testid={ `${index}-horizontal-image` }
+        />
+      </button>
+      <div className="done-details" key={ index }>
+        <div className="testando">
+          <p data-testid={ `${index}-horizontal-top-text` }>
+            {topText}
           </p>
-        </button>
-        <p data-testid={ `${index}-horizontal-done-date` }>
-          { results[index].doneDate }
-        </p>
-        <div>
           <button
             type="button"
             onClick={ handleClickShare }
@@ -78,14 +68,25 @@ function CardDoneRecipes({ results, index }) {
               data-testid={ `${index}-horizontal-share-btn` }
             />
           </button>
-          {linkCopied && <p>Link copied!</p>}
         </div>
-        { results[index].tags && results[index].tags.map((e, i) => (
-          <span key={ i } data-testid={ `${index}-${e}-horizontal-tag` }>
-            {e}
-          </span>
-        ))}
-
+        <button id="done-button" type="button" onClick={ handleClickRecipe }>
+          <p data-testid={ `${index}-horizontal-name` }>
+            { results[index].name }
+          </p>
+        </button>
+        <div>
+          <p data-testid={ `${index}-horizontal-done-date` }>
+            { `Done in: ${results[index].doneDate} ` }
+          </p>
+        </div>
+        {linkCopied && <p>Link copied!</p>}
+        <div id="span" key="qualquer">
+          { results[index].tags && results[index].tags.map((e, i) => (
+            <span key={ i } data-testid={ `${index}-${e}-horizontal-tag` }>
+              {`${e}   `}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
