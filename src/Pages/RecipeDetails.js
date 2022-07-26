@@ -102,7 +102,13 @@ function RecipeDetails(props) {
           alt="Thumb"
         />
         <div className="details-title-container">
-          <h2 data-testid="recipe-title">{ setTextTitle(results[0], typeForApi)}</h2>
+          <h2
+            className="recipe-title"
+            data-testid="recipe-title"
+          >
+            { setTextTitle(results[0], typeForApi)}
+
+          </h2>
           <div>
             <ShareButton
               link={ `http://localhost:3000${pathname}` }
@@ -118,8 +124,8 @@ function RecipeDetails(props) {
         <p data-testid="recipe-category">
           {setTextCategory(results[0], typeForApi)}
         </p>
-        <h4>Ingredients</h4>
         <div className="ingredient-container">
+          <h4>Ingredients</h4>
           {ingredients && ingredients.map((e, i) => (
             <li
               data-testid={ `${i}-ingredient-name-and-measure` }

@@ -91,27 +91,32 @@ function RecipeInProgress(props) {
   console.log(results);
   return (
     results.length === 0 ? <h1>Loading</h1> : (
-      <div>
+      <div className="details-main-container">
         <img
           className="recipe-img"
           data-testid="recipe-photo"
           src={ results[0].strDrinkThumb || results[0].strMealThumb }
           alt="DrinkThumb"
         />
-        <h2 data-testid="recipe-title">{results[0].strDrink || results[0].strMeal}</h2>
-        <ShareButton
-          link={ `http://localhost:3000${pathname.replace('/in-progress', '')}` }
-        />
-        <FavoriteButton
-          dataTest="favorite-btn"
-          id={ id }
-          results={ results }
-          type={ typeForLocal }
-        />
+        <div className="details-title-container">
+          <h2 data-testid="recipe-title">{results[0].strDrink || results[0].strMeal}</h2>
+          <div>
+            <ShareButton
+              link={ `http://localhost:3000${pathname.replace('/in-progress', '')}` }
+            />
+            <FavoriteButton
+              dataTest="favorite-btn"
+              id={ id }
+              results={ results }
+              type={ typeForLocal }
+            />
+          </div>
+        </div>
         <p data-testid="recipe-category">
           {results[0].strAlcoholic || results[0].strCategory}
         </p>
         <div className="ingredient-container">
+          <h4>Ingredients</h4>
           {ingredients && ingredients.map((e, i) => (
             <label key={ i } htmlFor="ingredient" data-testid={ `${i}-ingredient-step` }>
               <input
@@ -126,9 +131,12 @@ function RecipeInProgress(props) {
             </label>
           ))}
         </div>
-        <p data-testid="instructions">{results[0].strInstructions}</p>
+        <div className="instructions-container">
+          <h4>Instructions</h4>
+          <p data-testid="instructions">{results[0].strInstructions}</p>
+        </div>
         <button
-          className="finish-recipe-btn"
+          className="start-recipe-btn"
           onClick={ handleFinishBtn }
           data-testid="finish-recipe-btn"
           disabled={ disabled }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // import Logo from '../images/pirate/Logo.png';
-import LogoAzul from '../images/pirate/LogoAzul.png';
+// import LogoAzul from '../images/pirate/LogoAzul.png';
+import Titulo from '../images/pirate/Titulo.png';
 
 function Login({ history }) {
   const [userEmail, setEmail] = useState('');
@@ -39,7 +40,7 @@ function Login({ history }) {
 
   return (
     <div className="login-main">
-      <img className="logo" src={ LogoAzul } alt="logo" />
+      <img className="logo" src={ Titulo } alt="logo" />
       <div className="input-login-container">
         <input
           className="input-login"

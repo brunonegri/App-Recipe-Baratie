@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setApiAction, setPageAction } from '../redux/Actions';
-import drinkIcon from '../images/drinkIcon.svg';
-import mealIcon from '../images/mealIcon.svg';
+// import drinkIcon from '../images/drinkIcon.svg';
+// import mealIcon from '../images/mealIcon.svg';
+import drink from '../images/pirate/drink.png';
+import food from '../images/pirate/food.png';
 
 const Footer = ({ dispatchSetApi, dispatchPageName }) => {
   const history = useHistory();
@@ -27,7 +29,7 @@ const Footer = ({ dispatchSetApi, dispatchPageName }) => {
       >
         <img
           data-testid="drinks-bottom-btn"
-          src={ drinkIcon }
+          src={ drink }
           alt="drinkIcon"
         />
 
@@ -38,7 +40,7 @@ const Footer = ({ dispatchSetApi, dispatchPageName }) => {
       >
         <img
           data-testid="food-bottom-btn"
-          src={ mealIcon }
+          src={ food }
           alt="mealIcon"
         />
       </button>

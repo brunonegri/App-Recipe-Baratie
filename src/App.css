@@ -15,9 +15,8 @@ body {
 
 .login-main {
   align-items: center;
-  background: url('./images/pirate/loginBackground.jpeg');
+  background: url('./images/pirate/baratie2.png');
   background-repeat: no-repeat;
-  background-size: 360px 640px;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -28,7 +27,7 @@ body {
 
 .input-login-container {
   margin-bottom: 5px;
-  margin-top: 40%;
+
 }
 
 p {
@@ -64,7 +63,8 @@ p {
 
 .logo {
   height: 7rem;
-  top: 20px;
+  margin-bottom: 20px;
+  margin-top: 40%;
 }
 
 /* HEADER */
@@ -74,12 +74,6 @@ p {
   background: none;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-
-  /* background-color: aqua; */
-  padding-bottom: 10px;
-
-  /* position: fixed; */
 }
 
 .imgTitle {
@@ -109,8 +103,9 @@ p {
   background-color: #6f96a6;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 8px 0;
+
+  /* margin-bottom: 10px;
+  padding: 8px 0; */
 }
 
 .header-btn {
@@ -125,9 +120,7 @@ p {
   color: white;
   font-size: 15px;
   margin: 2px 1px;
-  width: 118px
-
-  /* color: white; */
+  width: 118px;
 }
 
 .search-btn {
@@ -188,6 +181,7 @@ p {
 /* RECIPES CARDS */
 .container-recipes {
   background: url('./images/pirate/baratie2.png');
+  background-position-y: 78px;
   display: flex;
   flex-direction: column;
   z-index: 1;
@@ -220,10 +214,16 @@ p {
 .card-container button {
   background: #6f96a6;
   box-shadow: 2px 2px 2px 1px #375560;
+  height: 200px;
   margin: 0;
   margin-bottom: 10px;
   padding: 0;
-  width: 95%;
+  width: 93%;
+}
+
+.card-image {
+  border-radius: 10px;
+  width: 100%;
 }
 
 .card-name {
@@ -251,16 +251,19 @@ p {
 
 /* RECIPE DETAILS */
 .details-main-container {
+  background: url('./images/pirate/baratie2.png');
+  background-position-y: 245px;
+
+  /* color: white; */
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .details-title-container {
-
-  /* background-color: aqua; */
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  margin: 0 10px;
   z-index: 0;
 }
 
@@ -269,20 +272,35 @@ p {
 }
 
 .recipe-img {
-  box-shadow: 1px 1px rgb(95, 94, 94);
+  border-radius: 0 0 5px 5px;
+  box-shadow: 1px 2px rgb(95, 94, 94, 0.451);
   height: 250px;
   margin-bottom: 10px;
   width: 100%;
 }
 
-.card-image {
-  border-radius: 10px;
-  width: 100%;
+.recipe-title {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 1px rgb(95, 94, 94, 0.451);
+  color: #6f96a6;
+  font-size: 30px;
+  font-weight: 600;
+  padding: 0 5px;
+  text-align: center;
 }
 
 .ingredient-container {
+
+  /* background: white; */
+  border: 2px solid #6f96a6;
+  border-radius: 8px;
+  box-shadow: 2px 2px 1px rgb(95, 94, 94, 0.451);
+  color: white;
   display: flex;
   flex-direction: column;
+  font-size: 20px;
+  margin: 0 10px;
   margin-bottom: 20px;
 }
 
@@ -293,23 +311,43 @@ p {
 }
 
 .recomedation-img {
-  border-radius: 20px 20px 0 0;
+  border-radius: 15px 15px 0 0;
   height: 160px;
   width: 100%;
 }
 
 
 .recomedation-text {
+  color: #60818f;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
+.recomedation-text p {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.recomedation-text span {
+  font-weight: 600;
+}
+
 .recomedation-btn {
-  background: none;
+
+  /* background: #6f96a6;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 1px #375560;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+  margin-bottom: 10px; */
+  background: white;
   border: none;
   border-radius: 15px;
-  box-shadow: 1px 2px gray;
+  box-shadow: 2px 2px 2px 1px #375560;
   padding: 0;
   width: 180px;
 }
@@ -328,11 +366,14 @@ p {
 
 .start-recipe-btn {
   align-self: center;
-  background: #020f59;
+  background: #6f96a6;
   border: none;
   border-radius: 15px;
   bottom: 10px;
+  box-shadow: 2px 2px 2px 1px rgb(62, 61, 61);
   color: white;
+  font-size: 18px;
+  font-weight: 600;
   padding: 10px 80px;
   position: fixed;
   z-index: 0;
@@ -349,34 +390,54 @@ p {
   border: none;
 }
 
+.done-page {
+  background: url('./images/pirate/baratie2.png');
+  background-position-y: 50px;
+  height: 100%;
+}
+
 .filter-done-recipes {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  padding: 20px;
 }
 
 .filter-done-recipes button {
-  border-radius: 5px;
-  margin: auto 10px;
+  background-color: #6f96a6;
+  border: 2px solid white;
+  border-radius: 7px;
+  color: white;
+  font-size: 15px;
+  margin: 2px 1px;
+  width: 118px;
 }
 
+.name-card-done {
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.category-card-done {
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+
 .done-button-item {
-  background-color: aliceblue;
+  background: #6f96a6;
   border-radius: 10px;
+  box-shadow: 2px 2px 2px 1px #375560;
+  color: white;
   display: flex;
-
-  /* box-shadow: 1px 2px #020f59; */
   height: 180px;
-
-  /* flex-direction: column; */
   margin: auto 10px;
   margin-bottom: 10px;
 }
 
 .card-image-done {
-  border-radius: 10px;
-  box-shadow: 1px 2px #020f59;
-  height: 180px;
+  border-radius: 15px 0 0 15px;
+  height: 100%;
   width: 165px;
 }
 
@@ -400,46 +461,107 @@ p {
   width: 100%;
 }
 
+.date-card-done {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
 .span {
   display: flex;
-  font-size: small;
+  font-size: 15px;
   justify-content: center;
+  margin-bottom: 5px;
 }
 
 .span span {
   margin: auto 5px;
 }
 
+/* PROFILE */
+.profile-page {
+  align-items: center;
+  background: url('./images/pirate/profilewallp.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 533px;
+
+
+  /* margin-top: 150px; */
+}
+
 .profile-menu {
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-top: 150px;
+  margin-top: 50%;
+}
+
+.profile-menu h3 {
+  align-self: center;
+  background-color: #6f96a6;
+  border: 2px solid white;
+  border-radius: 10px;
+  color: white;
+  padding: 5px;
 }
 
 .profile-menu button {
+  background-color: #6f96a6;
+  border: 2px solid white;
   border-radius: 10px;
-  box-shadow: 2px 2px #172052;
-  margin-block: 10px;
-  padding: 2px;
+  color: white;
+  font-size: 18px;
+
+  /* box-shadow: 2px 2px #172052; */
+  margin-block: 5px;
+  padding: 3px 0;
   width: 95%;
+
+
+}
+
+.instructions-container {
+  margin-bottom: 60px;
 }
 
 /* FAVORITE PAGE  */
-.favoriteCard {
-  border-radius: 10px;
-  box-shadow: 2px 3px black;
-  display: flex;
-  margin: 0 auto;
-  width: 95%;
+.favorite-page {
+  background: url('./images/pirate/baratie2.png');
+
+  /* background-position-y: 58px;
+  background-size: contain; */
+  height: 100vh;
 }
+
+.favoriteCard {
+  background: #6f96a6;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px 1px white;
+  color: white;
+  display: flex;
+  height: 160px;
+  margin: auto 10px;
+  margin-bottom: 10px;
+}
+
+.card-image-favorite {
+  border-radius: 10px 0 0 10px;
+  height: 100%;
+  width: 165px;
+}
+
+/*
+border-radius: 10px;
+  width: 100%; */
 
 .favname {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
+  justify-content: space-between;
+
+  /* width: 100%; */
 }
 
 .favname button {
@@ -448,8 +570,10 @@ p {
 }
 
 .favname p {
+  color: white;
   display: flex;
-  justify-content: start;
+
+  /* justify-content: start; */
   margin: 0;
 }
 
@@ -464,24 +588,32 @@ p {
   padding: 0;
 }
 
-.img-fav img {
-  height: 100%;
-  margin: 0;
-}
-
 .test {
   display: flex;
   flex-direction: column;
 }
 
+.name-card-favorite {
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+  margin-top: 40px;
+}
+
 .toptext {
   font-size: 15px;
+  margin-left: 20px;
 }
 
 
 .share-container {
   display: flex;
   height: 30px;
+  margin-bottom: 30px;
+}
+
+.fav-icon {
+  height: 40px;
 }
 
 @keyframes shake {

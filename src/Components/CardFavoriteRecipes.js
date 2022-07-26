@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
+// import shareIcon from '../images/shareIcon.svg';
+import shareDone from '../images/pirate/shareDone.png';
 import FavoriteButton from './FavoriteButton';
 
 function CardFavoriteRecipes({ index, results }) {
@@ -46,7 +47,7 @@ function CardFavoriteRecipes({ index, results }) {
       <button className="img-fav" type="button" onClick={ handleClickRecipe }>
 
         <img
-          className="card-image"
+          className="card-image-favorite "
           src={ results[index].image }
           alt="foodImage"
           data-testid={ `${index}-horizontal-image` } // imagem do card de receita
@@ -58,7 +59,7 @@ function CardFavoriteRecipes({ index, results }) {
             {topText}
           </p>
           <button type="button" onClick={ handleClickRecipe }>
-            <p data-testid={ `${index}-horizontal-name` }>
+            <p className="name-card-favorite" data-testid={ `${index}-horizontal-name` }>
               {results[index].name}
             </p>
           </button>
@@ -76,7 +77,8 @@ function CardFavoriteRecipes({ index, results }) {
             onClick={ handleClickShare }
           >
             <img
-              src={ shareIcon }
+              width="37px"
+              src={ shareDone }
               alt="Icone de Compartilhamento"
               data-testid={ `${index}-horizontal-share-btn` }
             />

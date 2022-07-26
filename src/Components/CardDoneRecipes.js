@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import clipboardCopy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
+import shareDone from '../images/pirate/shareDone.png';
+// import shareIcon from '../images/shareIcon.svg';
 
 function CardDoneRecipes({ results, index }) {
 //   console.log(results[index]);
@@ -16,7 +17,7 @@ function CardDoneRecipes({ results, index }) {
       const mergeText = `${results[index].nationality} - ${results[index].category}`;
       setTopText(mergeText);
     } else {
-      const mergeText = `${results[index].alcoholicOrNot} - ${results[index].category}`;
+      const mergeText = `${results[index].alcoholicOrNot}`;
       setTopText(mergeText);
     }
   }, []);
@@ -55,7 +56,10 @@ function CardDoneRecipes({ results, index }) {
       </button>
       <div className="done-details" key={ index }>
         <div className="testando">
-          <p data-testid={ `${index}-horizontal-top-text` }>
+          <p
+            className="category-card-done"
+            data-testid={ `${index}-horizontal-top-text` }
+          >
             {topText}
           </p>
           <button
@@ -63,19 +67,20 @@ function CardDoneRecipes({ results, index }) {
             onClick={ handleClickShare }
           >
             <img
-              src={ shareIcon }
+              width="28px"
+              src={ shareDone }
               alt="Icone de Compartilhamento"
               data-testid={ `${index}-horizontal-share-btn` }
             />
           </button>
         </div>
         <button id="done-button" type="button" onClick={ handleClickRecipe }>
-          <p data-testid={ `${index}-horizontal-name` }>
+          <p className="name-card-done" data-testid={ `${index}-horizontal-name` }>
             { results[index].name }
           </p>
         </button>
         <div>
-          <p data-testid={ `${index}-horizontal-done-date` }>
+          <p className="date-card-done" data-testid={ `${index}-horizontal-done-date` }>
             { `Done in: ${results[index].doneDate} ` }
           </p>
         </div>
