@@ -1,6 +1,8 @@
 body {
 
-  /* background: url('./images/baratie.png'); */
+  /* background: url('./images/pirate/loginBackground.jpeg');
+  background-repeat: no-repeat;
+  background-size: 360px 640px; */
   height: 100vh;
   margin: 0;
   max-width: 360px;
@@ -13,15 +15,21 @@ body {
 
 .login-main {
   align-items: center;
+  background: url('./images/pirate/loginBackground.jpeg');
+  background-repeat: no-repeat;
+  background-size: 360px 640px;
   display: flex;
   flex-direction: column;
-  margin-top: 40%;
+  height: 100vh;
+
+  /* margin-top: 40%; */
 }
 
 
-/* .input-login-container {
-  padding-bottom: 1rem;
-} */
+.input-login-container {
+  margin-bottom: 5px;
+  margin-top: 40%;
+}
 
 p {
   margin: 0;
@@ -30,30 +38,43 @@ p {
 .input-login {
   border: none;
   border-radius: 5px;
+  box-shadow: 4px 5px 4px #6f96a6;
   opacity: 90%;
 
   /* background: none; */
   padding: 10px 40px;
 }
 
+.input-login:focus {
+  border: 2px solid #6f96a6;
+  outline: none;
+
+}
+
 .login-button {
-  background-color: #020f59;
+  background-color: #6f96a6;
   border: none;
   border-radius: 5px;
+  box-shadow: 4px 5px 4px #f2c791;
   color: white;
   font-size: 18px;
+  margin-top: 20px;
   padding: 6px 30px;
 }
 
 .logo {
-  height: 8rem;
+  height: 7rem;
+  top: 20px;
 }
 
 /* HEADER */
 .header-container {
-  background-color: aqua;
+
+  /* background: #6f96a6; */
+  background: none;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
 
   /* background-color: aqua; */
   padding-bottom: 10px;
@@ -61,10 +82,19 @@ p {
   /* position: fixed; */
 }
 
+.imgTitle {
+  width: 120px;
+}
+
+.pirateUser {
+  height: 60px;
+}
+
 .header-mainbox {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .header-btn {
@@ -73,10 +103,10 @@ p {
 }
 
 .category-btn {
-
-  /* background-color: #020f59; */
-  border: 1px solid #020f59;
-  border-radius: 2px;
+  background-color: #6f96a6;
+  border: 2px solid white;
+  border-radius: 7px;
+  color: white;
   font-size: 15px;
   margin: 2px 1px;
   width: 118px
@@ -141,6 +171,7 @@ p {
 
 /* RECIPES CARDS */
 .container-recipes {
+  background: url('./images/pirate/baratie2.png');
   display: flex;
   flex-direction: column;
   z-index: 1;
@@ -171,18 +202,23 @@ p {
 }
 
 .card-container button {
-  background-color: rgb(175, 212, 235);
-  box-shadow: 2px 2px #172052;
+  background: #6f96a6;
+  box-shadow: 2px 2px 2px 1px #375560;
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 0;
   width: 95%;
 }
 
 .card-name {
+  color: white;
+  font-size: 18px;
   margin: 2px auto;
 }
 
 
 .footer-container {
-  background-color: aqua;
+  background: #6f96a6;
   bottom: 0;
   display: flex;
   justify-content: space-between;
@@ -190,6 +226,12 @@ p {
   width: 100%;
   z-index: 0;
 }
+
+.footer-container button {
+  background: none;
+  border: none;
+}
+
 
 /* RECIPE DETAILS */
 .details-main-container {
@@ -218,9 +260,8 @@ p {
 }
 
 .card-image {
-  border-radius: 5px;
-  margin-top: 15px;
-  width: 150px;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .ingredient-container {
