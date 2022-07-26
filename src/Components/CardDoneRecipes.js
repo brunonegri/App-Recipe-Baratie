@@ -80,7 +80,7 @@ function CardDoneRecipes({ results, index }) {
           </p>
         </div>
         {linkCopied && <p>Link copied!</p>}
-        <div id="span" key="qualquer">
+        <div className="span" key="qualquer">
           { results[index].tags && results[index].tags.map((e, i) => (
             <span key={ i } data-testid={ `${index}-${e}-horizontal-tag` }>
               {`${e}   `}
