@@ -6,9 +6,13 @@ import { setApiAction } from '../redux/Actions';
 // import profileIcon from '../images/profileIcon.svg';
 // import searchIcon from '../images/searchIcon.svg';
 // import PirateSearch from '../images/pirate/PirateSearch.png';
-import PirateSearchWhite from '../images/pirate/PirateSearchWhite.png';
 // import pirateUser from '../images/pirate/pirateUser.png';
+import PirateSearchWhite from '../images/pirate/PirateSearchWhite.png';
 import pirateUserWhite from '../images/pirate/pirateUserWhite.png';
+import DoneRecipesWhite from '../images/pirate/DoneRecipesWhite.png';
+import FavoriteRecipesWhite from '../images/pirate/FavoriteRecipesWhite.png';
+import FoodsWhite from '../images/pirate/FoodsWhite.png';
+import ProfileWhite from '../images/pirate/ProfileWhite.png';
 import SearchBar from './SearchBar';
 import CategoriesButtons from './CategoriesButtons';
 import Drinks from '../images/pirate/Drinks.png';
@@ -25,6 +29,9 @@ function Header({ pageName, dispatchSetApi }) {
     setVisivel(!visivel);
   };
 
+  const doneRecipes = 'Done Recipes';
+  const favoriteRecipes = 'Favorite Recipes';
+
   const setPageName = () => {
     if (history.location.pathname === '/profile') {
       setTitle('Profile');
@@ -38,10 +45,10 @@ function Header({ pageName, dispatchSetApi }) {
       dispatchSetApi('meal');
     }
     if (history.location.pathname === '/done-recipes') {
-      setTitle('Done Recipes');
+      setTitle(doneRecipes);
     }
     if (history.location.pathname === '/favorite-recipes') {
-      setTitle('Favorite Recipes');
+      setTitle(favoriteRecipes);
     }
   };
 
@@ -50,7 +57,7 @@ function Header({ pageName, dispatchSetApi }) {
   }, [history.location.pathname, pageName]);
 
   const searchIconValidate = title === 'Profile'
-   || title === 'Done Recipes' || title === 'Favorite Recipes';
+   || title === doneRecipes || title === favoriteRecipes;
   return (
     <div className="header-container">
       <div className="header-mainbox">
@@ -70,6 +77,26 @@ function Header({ pageName, dispatchSetApi }) {
           className="imgTitle"
           src={ Drinks }
           alt="drink title"
+        />}
+        {title === 'Foods' && <img
+          className="imgTitle"
+          src={ FoodsWhite }
+          alt="Foods title"
+        />}
+        {title === 'Profile' && <img
+          className="profileTitle"
+          src={ ProfileWhite }
+          alt="Profile title"
+        />}
+        {title === doneRecipes && <img
+          className="doneRecipesTitle"
+          src={ DoneRecipesWhite }
+          alt="Done title"
+        />}
+        {title === favoriteRecipes && <img
+          className="favoriteRecipesTitle"
+          src={ FavoriteRecipesWhite }
+          alt="Favorite title"
         />}
         {/* <h2
           data-testid="page-title"

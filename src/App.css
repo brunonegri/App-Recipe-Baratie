@@ -86,15 +86,31 @@ p {
   width: 120px;
 }
 
+.doneRecipesTitle {
+  width: 220px;
+}
+
+.favoriteRecipesTitle {
+  height: 60px;
+  width: 270px;
+}
+
+.profileTitle {
+  width: 180px;
+}
+
 .pirateUser {
   height: 60px;
 }
 
 .header-mainbox {
+  align-content: center;
   align-items: center;
+  background-color: #6f96a6;
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  padding: 8px 0;
 }
 
 .header-btn {
