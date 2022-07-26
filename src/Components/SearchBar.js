@@ -78,6 +78,7 @@ function SearchBar({ results, type, dispatchResults }) {
           <input
             id="ingredient-search"
             name="filter"
+            className="ingredient-search"
             type="radio"
             data-testid="ingredient-search-radio"
             value="ingredient-search"
@@ -90,6 +91,7 @@ function SearchBar({ results, type, dispatchResults }) {
         <label htmlFor="name-search">
           <input
             id="name-search"
+            className="name-search"
             name="filter"
             type="radio"
             data-testid="name-search-radio"
@@ -103,6 +105,7 @@ function SearchBar({ results, type, dispatchResults }) {
         <label htmlFor="first-letter">
 
           <input
+            className="first-letter"
             id="first-letter"
             name="filter"
             type="radio"

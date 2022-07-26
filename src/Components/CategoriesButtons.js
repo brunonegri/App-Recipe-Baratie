@@ -77,7 +77,7 @@ function CategoriesButtons({ dispatchResults }) {
         <button
           key={ i }
           type="button"
-          className="category-btn"
+          className="category-btn "
           data-testid={ `${e.strCategory}-category-filter` }
           onClick={ handleClick }
           value={ e.strCategory }

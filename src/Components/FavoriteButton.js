@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import blackHeartIcon from '../images/blackHeartIcon.svg';
+import closeWhite from '../images/pirate/closeWhite.png';
+// import close from '../images/pirate/close.png';
+// import open from '../images/pirate/open.png';
+import openWhite from '../images/pirate/openWhite.png';
 import { setCounterAction } from '../redux/Actions';
 import { addFavLocalStorage,
   remFavLocalStorage } from '../0 - Services/LocalStorage/LocalStorage';
@@ -31,11 +35,13 @@ function FavoriteButton({ id, type, results, dataTest, dispatchCounter, counterV
   return (
     <div>
       <button
+        className="imgbtn"
         type="button"
         onClick={ handleClick }
       >
         <img
-          src={ favorite ? blackHeartIcon : whiteHeartIcon }
+          className="fav-icon"
+          src={ favorite ? closeWhite : openWhite }
           alt="Icone de Favoritar"
           data-testid={ dataTest }
         />

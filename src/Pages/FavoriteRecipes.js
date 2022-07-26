@@ -40,32 +40,35 @@ function FavoriteRecipes({ counter }) {
   return (
     <div>
       <Header />
-      <div className="filter-done-recipes">
-        <button
-          type="button"
-          onClick={ handleFilterAll }
-          data-testid="filter-by-all-btn"
-        >
-          All
-        </button>
-        <button
-          type="button"
-          onClick={ handleFilterFood }
-          data-testid="filter-by-food-btn"
-        >
-          Food
-        </button>
-        <button
-          type="button"
-          onClick={ handleFilterDrinks }
-          data-testid="filter-by-drink-btn"
-        >
-          Drinks
-        </button>
+      <div className="favorite-page">
+
+        <div className="filter-done-recipes">
+          <button
+            type="button"
+            onClick={ handleFilterAll }
+            data-testid="filter-by-all-btn"
+          >
+            All
+          </button>
+          <button
+            type="button"
+            onClick={ handleFilterFood }
+            data-testid="filter-by-food-btn"
+          >
+            Food
+          </button>
+          <button
+            type="button"
+            onClick={ handleFilterDrinks }
+            data-testid="filter-by-drink-btn"
+          >
+            Drinks
+          </button>
+        </div>
+        {favoriteRecipes && favoriteRecipes.map((e, i) => (
+          <CardFavoriteRecipes key={ i } index={ i } results={ favoriteRecipes } />
+        ))}
       </div>
-      {favoriteRecipes && favoriteRecipes.map((e, i) => (
-        <CardFavoriteRecipes key={ i } index={ i } results={ favoriteRecipes } />
-      ))}
     </div>
   );
 }

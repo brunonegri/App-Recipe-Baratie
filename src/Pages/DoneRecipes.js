@@ -30,7 +30,7 @@ function DoneRecipes() {
   };
 
   return (
-    <div>
+    <div className="done-page">
 
       <Header />
       <div className="filter-done-recipes">

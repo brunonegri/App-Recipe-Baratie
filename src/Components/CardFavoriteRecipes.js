@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
+// import shareIcon from '../images/shareIcon.svg';
+import shareDone from '../images/pirate/shareDone.png';
 import FavoriteButton from './FavoriteButton';
 
 function CardFavoriteRecipes({ index, results }) {
@@ -16,7 +17,7 @@ function CardFavoriteRecipes({ index, results }) {
       const mergeText = `${results[index].nationality} - ${results[index].category}`;
       setTopText(mergeText);
     } else {
-      const mergeText = `${results[index].alcoholicOrNot} - ${results[index].category}`;
+      const mergeText = `${results[index].alcoholicOrNot}`;
       setTopText(mergeText);
     }
   }, []);
@@ -42,39 +43,42 @@ function CardFavoriteRecipes({ index, results }) {
   };
 
   return (
-    <div>
-      <div key={ index }>
-        <button type="button" onClick={ handleClickRecipe }>
+    <div className="favoriteCard" key={ index }>
+      <button className="img-fav" type="button" onClick={ handleClickRecipe }>
 
-          <img
-            className="card-image"
-            src={ results[index].image }
-            alt="foodImage"
-            data-testid={ `${index}-horizontal-image` } // imagem do card de receita
-          />
-        </button>
-        <p data-testid={ `${index}-horizontal-top-text` }>
-          {topText}
-        </p>
-        <button type="button" onClick={ handleClickRecipe }>
-          <p data-testid={ `${index}-horizontal-name` }>
-            {results[index].name}
-          </p>
-        </button>
-
-        <FavoriteButton
-          id={ results[index].id }
-          results={ results }
-          type={ results[index].type }
-          dataTest={ `${index}-horizontal-favorite-btn` }
+        <img
+          className="card-image-favorite "
+          src={ results[index].image }
+          alt="foodImage"
+          data-testid={ `${index}-horizontal-image` } // imagem do card de receita
         />
-        <div>
+      </button>
+      <div className="favname">
+        <div className="test">
+          <p className="toptext" data-testid={ `${index}-horizontal-top-text` }>
+            {topText}
+          </p>
+          <button type="button" onClick={ handleClickRecipe }>
+            <p className="name-card-favorite" data-testid={ `${index}-horizontal-name` }>
+              {results[index].name}
+            </p>
+          </button>
+        </div>
+        <div className="share-container">
+          <FavoriteButton
+            id={ results[index].id }
+            results={ results }
+            type={ results[index].type }
+            dataTest={ `${index}-horizontal-favorite-btn` }
+          />
+
           <button
             type="button"
             onClick={ handleClickShare }
           >
             <img
-              src={ shareIcon }
+              width="37px"
+              src={ shareDone }
               alt="Icone de Compartilhamento"
               data-testid={ `${index}-horizontal-share-btn` }
             />
@@ -83,6 +87,7 @@ function CardFavoriteRecipes({ index, results }) {
         </div>
       </div>
     </div>
+
   );
 }
 

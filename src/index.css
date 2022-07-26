@@ -1,18 +1,11 @@
-@font-face {
-  font-family: 'onepiecefont';
-  src: local('onepiecefont') , url('./fonts/onepiecefont.ttf') format('truetype');
-}
+@import url('https://fonts.googleapis.com/css2?family=Oldenburg&display=swap');
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: 'Oldenburg', cursive;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Oldenburg', cursive;
 }

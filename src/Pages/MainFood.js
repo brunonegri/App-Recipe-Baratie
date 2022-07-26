@@ -7,6 +7,7 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Recipes from '../Components/Recipes';
 import fetchRecipeInfos from '../0 - Services/API/requestAPI';
+import profilewallp from '../images/pirate/profilewallp.png';
 
 function MainFoods({ results, type, dispatchResults }) {
   const history = useHistory();
@@ -41,7 +42,7 @@ function MainFoods({ results, type, dispatchResults }) {
       <Header />
       <div className="recipe-container">
         {results === null || results.length === 0
-          ? <h1>Loading...</h1>
+          ? <img src={ profilewallp } alt="loading" />
           : results.slice(0, mN).map((e, i) => (
             <Recipes
               key={ i }

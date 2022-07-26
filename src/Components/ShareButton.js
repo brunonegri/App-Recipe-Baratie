@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import clipboardCopy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
+// import shareIcon from '../images/shareIcon.svg';
+import shareDone from '../images/pirate/shareDone.png';
 
 function ShareButton(pathname) {
   const [linkCopied, setLinkCopied] = useState(false);
@@ -13,11 +14,12 @@ function ShareButton(pathname) {
   return (
     <div>
       <button
+        className="imgbtn"
         type="button"
         onClick={ handleClick }
       >
         <img
-          src={ shareIcon }
+          src={ shareDone }
           alt="Icone de Compartilhamento"
           data-testid="share-btn"
         />
