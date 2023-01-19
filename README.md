@@ -8,7 +8,7 @@
 
 ## 💻 Detalhes do Projeto
 
-Projeto desenvolvido durante o curso da Trybe. Este foi o ultimo projeto do modúlo de front-end realizado dia 25/07/22, o projeto foi realizado em grupo o desafio era desenvolver um aplicativo de receitas apenas a versão mobile.
+Projeto desenvolvido durante o curso da Trybe. Este foi o ultimo projeto do modúlo de front-end realizado dia 25/07/22, o projeto foi realizado em grupo o desafio era desenvolver um aplicativo de receitas apenas a versão mobile. Foi escolhido o tema de One Piece por ser algo que todos do grupo gostavam.
 Usando de uma API de receitas que varios endpoints de comidas e bebidas. 
 A pessoa usuaria poderia acessar a aplicação com email e senha, fazer buscas, filtrar, favoritar, marcar o progresso da lista de ingredientes e compartilhar o link da receita.
 
