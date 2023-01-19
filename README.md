@@ -8,14 +8,16 @@
 
 ## 💻 Detalhes do Projeto
 
-Projeto desenvolvido durante o curso da Trybe. Este foi o ultimo projeto do modúlo de front-end realizado dia 18/07/22, o projeto foi realizado em grupo o desafio era fazer uso de uma API de receitas que varios endpoints de comidas e bebidas. A pessoa usuaria poderia acessar a aplicação com email e senha, fazer buscas, filtrar, favoritar, marcar o progresso da lista de ingredientes e compartilhar o link da receita.
+Projeto desenvolvido durante o curso da Trybe. Este foi o ultimo projeto do modúlo de front-end realizado dia 25/07/22, o projeto foi realizado em grupo o desafio era desenvolver um aplicativo de receitas apenas a versão mobile.
+Usando de uma API de receitas que varios endpoints de comidas e bebidas. 
+A pessoa usuaria poderia acessar a aplicação com email e senha, fazer buscas, filtrar, favoritar, marcar o progresso da lista de ingredientes e compartilhar o link da receita.
 
 ### Ajustes e melhorias
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
 
-- [ ] Fazer ajustes de rotas
-- [ ] Fazer o pagina responsiva para desktop
+- [ ] Resolver alguns conflitos de rotas
+- [ ] Fazer o página responsiva para desktop
 - [ ] Melhorar interação do usuário
 
   🎨 ABERTO PARA SUGESTÕES E MELHORIAS 
